@@ -37,43 +37,22 @@
     --line-height: 1.85;
   }
 @media screen and (max-width: 768px) {
-    /* 强制所有容器全宽 */
-    main, .container, section, article {
-        width: 100% !important;
-        max-width: 100% !important;
-        padding: 10px !important;
-        margin: 0 !important;
-        box-sizing: border-box !important;
+    /* 破坏 grid 布局，变成普通块级排列 */
+    .grid-3 {
+        display: block !important;
+        grid-template-columns: none !important;
     }
     
-    /* 强制破坏flex和grid布局，变成单列堆叠 */
-    div[class*="col"], 
-    div[class*="card"], 
-    .row, .cards, .columns,
-    [style*="display: flex"], 
-    [style*="display:flex"],
-    [style*="display: grid"], 
-    [style*="display:grid"] {
-        display: block !important;
-        width: 100% !important;
-    }
-    
-    /* 所有直接子元素都变100%宽度 */
-    .slide-container > div,
-    .container > div,
-    section > div {
+    /* 每个卡片占满宽度 */
+    .callout, .callout-warning {
         width: 100% !important;
         max-width: 100% !important;
-        display: block !important;
         margin-bottom: 15px !important;
+        grid-column: auto !important; /* 覆盖 grid-column:1/2/3 */
+        box-sizing: border-box;
     }
     
-    /* 文字适配 */
-    h1 { font-size: 18px !important; }
-    h2 { font-size: 16px !important; }
-    p, li { font-size: 14px !important; line-height: 1.6 !important; word-wrap: break-word !important; }
-    
-    /* 导航栏换行 */
+    /* 导航和文字适配 */
     #top-nav {
         flex-wrap: wrap !important;
         height: auto !important;
@@ -81,10 +60,14 @@
     }
     .nav-links {
         width: 100% !important;
-        justify-content: flex-start !important;
         margin-top: 8px !important;
     }
+    
+    h1 { font-size: 18px !important; }
+    h2 { font-size: 16px !important; }
+    p, li { font-size: 14px !important; line-height: 1.6 !important; }
 }
+
 
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
