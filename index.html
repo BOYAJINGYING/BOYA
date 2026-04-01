@@ -737,6 +737,23 @@
     font-size: 15px;
     margin: 12px 0;
   }
+
+  /* ========== 新增：强制表格滚动+文字换行 ========== */
+  .tbl-wrap {
+    overflow-x: auto !important;
+    -webkit-overflow-scrolling: touch;
+  }
+  .tbl-wrap table {
+    min-width: 500px !important;
+    width: auto !important;
+  }
+  .tbl-wrap td,
+  .tbl-wrap th {
+    white-space: normal !important;
+    word-break: break-word !important;
+    overflow-wrap: break-word !important;
+    text-overflow: clip !important;
+  }
 }
 
 /* 小屏幕手机额外优化 */
