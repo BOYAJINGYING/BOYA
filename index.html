@@ -2,7 +2,7 @@
 <html lang="zh-CN">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 <title>认知地震 — AI时代人类价值的底层重构 V12</title>
 <style>
   :root {
@@ -36,30 +36,8 @@
     --font-size-xs: 12px;
     --line-height: 1.85;
   }
-@media screen and (max-width: 768px) {
-  /* 只保留：三列变单列（这是唯一验证成功的） */
-  .grid-3 {
-    display: block !important;
-    grid-template-columns: none !important;
-  }
-  
-  .callout, .callout-warning {
-    width: 100% !important;
-    margin-bottom: 15px !important;
-    grid-column: auto !important;
-  }
-  
-  /* 导航栏 */
-  #top-nav {
-    flex-wrap: wrap !important;
-    height: auto !important;
-    padding: 10px !important;
-  }
-}
-
 
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
   html { scroll-behavior: smooth; }
 
   body {
@@ -84,7 +62,6 @@
     height: 52px;
     box-shadow: 0 2px 10px rgba(0,0,0,0.3);
   }
-
   #top-nav .nav-title {
     color: var(--gold);
     font-size: 15px;
@@ -92,7 +69,6 @@
     letter-spacing: 0.08em;
     white-space: nowrap;
   }
-
   #top-nav .nav-links {
     display: flex;
     gap: 4px;
@@ -101,7 +77,6 @@
     scrollbar-width: none;
   }
   #top-nav .nav-links::-webkit-scrollbar { display: none; }
-
   #top-nav .nav-links a {
     color: rgba(255,255,255,0.8);
     text-decoration: none;
@@ -112,7 +87,6 @@
     transition: all 0.2s;
   }
   #top-nav .nav-links a:hover { background: rgba(201,162,39,0.25); color: var(--gold); }
-
   #top-nav .nav-badge {
     display: flex;
     gap: 8px;
@@ -171,7 +145,6 @@
     overflow: hidden;
     page-break-inside: avoid;
   }
-
   .page-header {
     background: var(--navy);
     padding: 14px 24px;
@@ -181,14 +154,12 @@
     gap: 12px;
     flex-wrap: wrap;
   }
-
   .page-header-left {
     display: flex;
     align-items: center;
     gap: 10px;
     flex-wrap: wrap;
   }
-
   .badge-chapter {
     background: rgba(201,162,39,0.3);
     border: 1px solid rgba(201,162,39,0.5);
@@ -199,7 +170,6 @@
     border-radius: 5px;
     white-space: nowrap;
   }
-
   .badge-type {
     background: rgba(255,255,255,0.12);
     color: rgba(255,255,255,0.7);
@@ -208,14 +178,12 @@
     border-radius: 4px;
     white-space: nowrap;
   }
-
   .page-title-text {
     color: var(--white);
     font-size: 16px;
     font-weight: 700;
     letter-spacing: 0.04em;
   }
-
   .page-num {
     background: rgba(201,162,39,0.25);
     border: 1px solid rgba(201,162,39,0.45);
@@ -228,7 +196,6 @@
     flex-shrink: 0;
     font-variant-numeric: tabular-nums;
   }
-
   .page-body {
     padding: 24px;
   }
@@ -251,7 +218,6 @@
     inset: 0;
     background: radial-gradient(ellipse at 50% 20%, rgba(201,162,39,0.12) 0%, transparent 70%);
   }
-
   .cover-icon { font-size: 56px; margin-bottom: 24px; display: block; }
   .cover-title { font-size: 42px; font-weight: 800; color: var(--white); letter-spacing: 0.12em; margin-bottom: 10px; }
   .cover-subtitle { font-size: 20px; color: var(--gold); font-weight: 600; margin-bottom: 32px; letter-spacing: 0.06em; }
@@ -279,9 +245,6 @@
   .cover-meta { color: rgba(255,255,255,0.4); font-size: 12px; }
 
   /* ── CONTENT BLOCKS ── */
-  .block { margin-bottom: 18px; }
-  .block:last-child { margin-bottom: 0; }
-
   .callout {
     border-radius: 8px;
     padding: 16px 20px;
@@ -295,26 +258,20 @@
     text-transform: uppercase;
   }
   .callout p, .callout li { font-size: 14px; line-height: 1.75; }
-
   .callout-core { background: rgba(15,38,66,0.05); border-left: 3px solid var(--navy-mid); }
   .callout-core .callout-label { color: var(--navy-mid); }
-
   .callout-insight { background: var(--gold-pale); border-left: 3px solid var(--gold); }
   .callout-insight .callout-label { color: #8a6a00; }
   .callout-insight p { color: #5c4400; }
-
   .callout-warning { background: var(--rose-pale); border-left: 3px solid var(--rose); }
   .callout-warning .callout-label { color: var(--rose); }
-
   .callout-sage { background: var(--sage-pale); border-left: 3px solid var(--sage); }
   .callout-sage .callout-label { color: var(--sage); }
-
   .callout-blue { background: #e8f0fa; border-left: 3px solid var(--navy-mid); }
   .callout-blue .callout-label { color: var(--navy-mid); }
 
   .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
   .grid-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 14px; }
-
   @media(max-width:680px) {
     .grid-2, .grid-3 { grid-template-columns: 1fr; }
   }
@@ -340,14 +297,11 @@
     color: var(--text);
     margin: 12px 0 6px;
   }
-
   p { margin-bottom: 10px; font-size: 15px; }
   p:last-child { margin-bottom: 0; }
-
   ul, ol { padding-left: 22px; margin-bottom: 10px; }
   li { margin-bottom: 5px; font-size: 14px; line-height: 1.7; }
   li:last-child { margin-bottom: 0; }
-
   strong { color: var(--navy); }
   em { color: var(--rose); font-style: normal; font-weight: 600; }
 
@@ -386,8 +340,16 @@
   .hl-list li.sage .hl-num { background: var(--sage); }
 
   /* ── TABLE ── */
-  .tbl-wrap { overflow-x: auto; margin: 14px 0; }
-  table { width: 100%; border-collapse: collapse; font-size: 13.5px; }
+  .tbl-wrap {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    margin: 14px 0;
+  }
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 13.5px;
+  }
   th {
     background: var(--navy);
     color: var(--gold-light);
@@ -396,7 +358,12 @@
     text-align: left;
     white-space: nowrap;
   }
-  td { padding: 8px 14px; border-bottom: 1px solid var(--border); vertical-align: top; line-height: 1.65; }
+  td {
+    padding: 8px 14px;
+    border-bottom: 1px solid var(--border);
+    vertical-align: top;
+    line-height: 1.65;
+  }
   tr:nth-child(even) td { background: #f4f7fc; }
   tr:hover td { background: #edf2fa; }
 
@@ -535,13 +502,6 @@
   }
   .progress-bar-fill { height: 100%; border-radius: 4px; background: linear-gradient(to right, var(--teal), var(--navy-mid)); }
 
-  /* ── DIVIDER ── */
-  .section-divider {
-    border: none;
-    border-top: 1px solid var(--border);
-    margin: 20px 0;
-  }
-
   /* ── INLINE HIGHLIGHT ── */
   .hl-gold { background: var(--gold-pale); color: #7a5c00; padding: 1px 5px; border-radius: 3px; font-weight: 600; }
   .hl-rose { background: var(--rose-pale); color: var(--rose); padding: 1px 5px; border-radius: 3px; font-weight: 600; }
@@ -569,215 +529,187 @@
     z-index: 999;
   }
   #scroll-top:hover { background: var(--navy-mid); }
-  @media print {
+  @media print { #scroll-top { display: none; } }
+
+  /* ========== 手机适配（关键：表格滚动+文字换行） ========== */
+  @media (max-width: 768px) {
+    :root {
+      --font-size-base: 17px;
+      --font-size-sm: 15px;
+      --line-height: 1.7;
+      --page-w: 100%;
+    }
+
+    main {
+      padding: 16px 12px;
+      max-width: 100%;
+    }
+    .page-body {
+      padding: 20px 16px;
+    }
+
+    /* 封面调整 */
+    .page-cover {
+      padding: 40px 20px;
+    }
+    .cover-title {
+      font-size: 32px;
+      letter-spacing: 0.08em;
+    }
+    .cover-subtitle {
+      font-size: 18px;
+    }
+    .cover-icon {
+      font-size: 40px;
+    }
+    .cover-cards {
+      flex-direction: column;
+      align-items: center;
+      gap: 12px;
+    }
+    .cover-card {
+      width: 100%;
+      max-width: 280px;
+      padding: 16px 20px;
+    }
+
+    /* 导航栏 */
+    #top-nav {
+      flex-wrap: wrap;
+      height: auto;
+      padding: 10px 12px;
+      gap: 8px;
+    }
+    #top-nav .nav-title {
+      font-size: 16px;
+      order: 1;
+    }
+    #top-nav .nav-links {
+      order: 3;
+      width: 100%;
+      margin-top: 4px;
+      gap: 2px;
+      overflow-x: auto;
+    }
+    #top-nav .nav-links a {
+      font-size: 13px;
+      padding: 6px 10px;
+    }
+    #top-nav .nav-badge {
+      order: 2;
+      margin-left: auto;
+    }
+    .chapter-nav {
+      padding: 0 12px;
+    }
+    .chapter-nav a {
+      font-size: 12px;
+      padding: 8px 12px;
+    }
+
+    /* 页面头部 */
+    .page-header {
+      padding: 12px 16px;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 8px;
+    }
+    .page-title-text {
+      font-size: 15px;
+      line-height: 1.4;
+    }
+    .page-num {
+      align-self: flex-end;
+      font-size: 12px;
+    }
+
+    /* 网格强制单列 */
+    .grid-2, .grid-3 {
+      grid-template-columns: 1fr !important;
+      gap: 16px;
+    }
+
+    /* 表格横向滚动 + 文字换行（核心） */
+    .tbl-wrap {
+      overflow-x: auto !important;
+      -webkit-overflow-scrolling: touch !important;
+      margin: 12px 0 !important;
+    }
+    .tbl-wrap table {
+      min-width: 500px !important;  /* 保证表格比手机宽，滚动条出现 */
+      width: auto !important;
+    }
+    .tbl-wrap td,
+    .tbl-wrap th {
+      white-space: normal !important;
+      word-break: break-word !important;
+      overflow-wrap: break-word !important;
+      text-overflow: clip !important;
+    }
+
+    /* 其他组件微调 */
+    .tool-box, .practice-box, .callout {
+      padding: 16px;
+      margin: 12px 0;
+    }
+    .step-flow {
+      flex-direction: column;
+      gap: 8px;
+    }
+    .step {
+      min-width: auto;
+      width: 100%;
+      margin: 0;
+    }
+    .chapter-intro {
+      padding: 36px 24px;
+    }
+    .chapter-intro .ci-title {
+      font-size: 26px;
+    }
+    .chapter-intro .ci-desc {
+      font-size: 15px;
+    }
     #scroll-top {
-      display: none;
+      bottom: 20px;
+      right: 20px;
+      width: 44px;
+      height: 44px;
+      font-size: 20px;
+    }
+    .hl-list li {
+      padding: 12px;
+      font-size: 15px;
+    }
+    blockquote {
+      padding: 12px 16px;
+      font-size: 15px;
+      margin: 12px 0;
     }
   }
-@media (max-width: 768px) {
-  :root {
-    --font-size-base: 17px;        /* 手机字体稍大更易读 */
-    --font-size-sm: 15px;
-    --line-height: 1.7;
-    --page-w: 100%;                /* 取消固定宽度限制 */
-  }
-  
-  main {
-    padding: 16px 12px;            /* 减少内边距 */
-    max-width: 100%;
-  }
-  
-  .page-body {
-    padding: 20px 16px;            /* 减少内容区内边距 */
-  }
-  
-  /* 封面页调整 */
-  .page-cover {
-    padding: 40px 20px;
-  }
-  .cover-title {
-    font-size: 32px;               /* 标题缩小适应屏幕 */
-    letter-spacing: 0.08em;
-  }
-  .cover-subtitle {
-    font-size: 18px;
-  }
-  .cover-icon {
-    font-size: 40px;
-  }
-  .cover-cards {
-    flex-direction: column;        /* 卡片垂直堆叠 */
-    align-items: center;
-    gap: 12px;
-  }
-  .cover-card {
-    width: 100%;
-    max-width: 280px;
-    padding: 16px 20px;
-  }
-  
-  /* 导航栏调整 */
-  #top-nav {
-    flex-wrap: wrap;
-    height: auto;
-    padding: 10px 12px;
-    gap: 8px;
-  }
-  #top-nav .nav-title {
-    font-size: 16px;
-    order: 1;
-  }
-  #top-nav .nav-links {
-    order: 3;
-    width: 100%;
-    margin-top: 4px;
-    gap: 2px;
-    overflow-x: auto;
-  }
-  #top-nav .nav-links a {
-    font-size: 13px;
-    padding: 6px 10px;
-  }
-  #top-nav .nav-badge {
-    order: 2;
-    margin-left: auto;
-  }
-  
-  .chapter-nav {
-    padding: 0 12px;
-  }
-  .chapter-nav a {
-    font-size: 12px;
-    padding: 8px 12px;
-  }
-  
-  /* 页面头部调整 */
-  .page-header {
-    padding: 12px 16px;
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 8px;
-  }
-  .page-title-text {
-    font-size: 15px;
-    line-height: 1.4;
-  }
-  .page-num {
-    align-self: flex-end;
-    font-size: 12px;
-  }
-  
-  /* 网格布局强制单列 */
-  .grid-2, .grid-3 {
-    grid-template-columns: 1fr !important;
-    gap: 16px;
-  }
-  
-  /* 表格横向滚动 */
-  .tbl-wrap {
-    overflow-x: auto;
-    -webkit-overflow-scrolling: touch;
-    margin: 12px -8px;
-    padding: 0 8px;
-  }
-  table {
-    font-size: 14px;
-    min-width: 600px;  /* 保证表格不压缩变形 */
-  }
-  th, td {
-    padding: 8px 10px;
-  }
-  
-  /* 工具箱调整 */
-  .tool-box, .practice-box, .callout {
-    padding: 16px;
-    margin: 12px 0;
-  }
-  
-  /* 步骤流程调整 */
-  .step-flow {
-    flex-direction: column;
-    gap: 8px;
-  }
-  .step {
-    min-width: auto;
-    width: 100%;
-    margin: 0;
-  }
-  
-  /* 章节介绍页调整 */
-  .chapter-intro {
-    padding: 36px 24px;
-  }
-  .chapter-intro .ci-title {
-    font-size: 26px;
-  }
-  .chapter-intro .ci-desc {
-    font-size: 15px;
-  }
-  
-  /* 返回顶部按钮调整 */
-  #scroll-top {
-    bottom: 20px;
-    right: 20px;
-    width: 44px;
-    height: 44px;
-    font-size: 20px;
-  }
-  
-  /* 高亮列表调整 */
-  .hl-list li {
-    padding: 12px;
-    font-size: 15px;
-  }
-  
-  /* 引用块调整 */
-  blockquote {
-    padding: 12px 16px;
-    font-size: 15px;
-    margin: 12px 0;
-  }
 
-  /* ========== 新增：强制表格滚动+文字换行 ========== */
-  .tbl-wrap {
-    overflow-x: auto !important;
-    -webkit-overflow-scrolling: touch;
+  /* 极小屏幕微调 */
+  @media (max-width: 480px) {
+    :root {
+      --font-size-base: 16px;
+    }
+    .cover-title {
+      font-size: 28px;
+    }
+    .cover-subtitle {
+      font-size: 16px;
+    }
+    .badge-chapter, .badge-type {
+      font-size: 11px;
+      padding: 2px 8px;
+    }
+    .page-title-text {
+      font-size: 14px !important;
+    }
+    .chapter-intro .ci-title {
+      font-size: 24px;
+    }
   }
-  .tbl-wrap table {
-    min-width: 500px !important;
-    width: auto !important;
-  }
-  .tbl-wrap td,
-  .tbl-wrap th {
-    white-space: normal !important;
-    word-break: break-word !important;
-    overflow-wrap: break-word !important;
-    text-overflow: clip !important;
-  }
-}
-
-/* 小屏幕手机额外优化 */
-@media (max-width: 480px) {
-  :root {
-    --font-size-base: 16px;
-  }
-  .cover-title {
-    font-size: 28px;
-  }
-  .cover-subtitle {
-    font-size: 16px;
-  }
-  .badge-chapter, .badge-type {
-    font-size: 11px;
-    padding: 2px 8px;
-  }
-  .page-title-text {
-    font-size: 14px !important;
-  }
-  .chapter-intro .ci-title {
-    font-size: 24px;
-  }
-}
 </style>
 </head>
 <body>
@@ -889,17 +821,14 @@
                 <path d="M0,0 L8,4 L0,8 Z" fill="#607080"/>
               </marker>
             </defs>
-            <!-- Axes -->
             <line x1="40" y1="230" x2="320" y2="230" stroke="#607080" stroke-width="1.5" marker-end="url(#arrowh)"/>
             <line x1="40" y1="230" x2="40" y2="20" stroke="#607080" stroke-width="1.5" marker-end="url(#arrowh)"/>
-            <!-- Axis labels -->
             <text x="180" y="252" text-anchor="middle" font-size="11" fill="#607080">AI自动化程度</text>
             <text x="16" y="125" text-anchor="middle" font-size="10" fill="#607080" transform="rotate(-90,16,125)">人类核心价值</text>
             <text x="38" y="240" text-anchor="end" font-size="10" fill="#9aa8b8">低</text>
             <text x="315" y="240" text-anchor="middle" font-size="10" fill="#9aa8b8">高</text>
             <text x="38" y="230" text-anchor="end" font-size="10" fill="#9aa8b8">低</text>
             <text x="38" y="24" text-anchor="end" font-size="10" fill="#9aa8b8">高</text>
-            <!-- High-value nodes (top-left zone) -->
             <rect x="55" y="38" width="64" height="22" rx="5" fill="#1a3a5c" opacity="0.9"/>
             <text x="87" y="53" text-anchor="middle" font-size="11" fill="#e8bc3a" font-weight="700">价值判断</text>
             <rect x="130" y="46" width="64" height="22" rx="5" fill="#1a3a5c" opacity="0.9"/>
@@ -912,14 +841,12 @@
             <text x="227" y="113" text-anchor="middle" font-size="11" fill="#e8bc3a" font-weight="700">模式速配</text>
             <rect x="80" y="120" width="64" height="22" rx="5" fill="#2a4a72" opacity="0.8"/>
             <text x="112" y="135" text-anchor="middle" font-size="11" fill="#e8bc3a" font-weight="700">策略选择</text>
-            <!-- Mid zone -->
             <rect x="148" y="146" width="64" height="22" rx="5" fill="#2a4a72" opacity="0.7"/>
             <text x="180" y="161" text-anchor="middle" font-size="11" fill="#e8bc3a">问题表征</text>
             <rect x="216" y="164" width="64" height="22" rx="5" fill="#3a5a88" opacity="0.65"/>
             <text x="248" y="179" text-anchor="middle" font-size="11" fill="#e8bc3a">假设检验</text>
             <rect x="86" y="178" width="64" height="22" rx="5" fill="#3a5a88" opacity="0.6"/>
             <text x="118" y="193" text-anchor="middle" font-size="11" fill="#c9a227">认知监控</text>
-            <!-- Annotation -->
             <text x="200" y="220" text-anchor="end" font-size="10" fill="#9aa8b8">← 元能力区域</text>
           </svg>
           <p style="font-size:11px;color:var(--text-muted);margin-top:8px">图注：AI自动化程度越高，人类越需向高价值区域迁移。<br>来源：本文设计，基于Autor et al. 2003技能极化模型拓展</p>
@@ -1191,10 +1118,8 @@
             <line x1="30" y1="140" x2="30" y2="15" stroke="#607080" stroke-width="1.2"/>
             <text x="148" y="155" text-anchor="middle" font-size="10" fill="#607080">时间</text>
             <text x="20" y="80" text-anchor="middle" font-size="9" fill="#607080" transform="rotate(-90,20,80)">技能价值</text>
-            <!-- Traditional skill line (steep decay) -->
             <polyline points="35,30 90,55 140,95 185,122 230,135 260,138" fill="none" stroke="#1e4a7a" stroke-width="2.5"/>
             <text x="262" y="140" font-size="10" fill="#1e4a7a">传统技能</text>
-            <!-- Meta ability (slow decay) -->
             <polyline points="35,40 90,50 140,65 185,80 230,95 260,108" fill="none" stroke="#c9a227" stroke-width="2.5" stroke-dasharray="5,3"/>
             <text x="242" y="105" font-size="10" fill="#c9a227">元能力</text>
           </svg>
@@ -1224,11 +1149,7 @@
     <div class="tbl-wrap">
       <table>
         <thead>
-          <tr>
-            <th>职业类型</th>
-            <th>价值变动趋势</th>
-            <th>数据来源</th>
-          </tr>
+          <tr><th>职业类型</th><th>价值变动趋势</th><th>数据来源</th></tr>
         </thead>
         <tbody>
           <tr><td>初级编程</td><td><em>需求显著下降</em></td><td>World Economic Forum, 2025</td></tr>
@@ -1322,7 +1243,6 @@
           <svg viewBox="0 0 280 220" style="width:100%;display:block">
             <circle cx="140" cy="110" r="50" fill="none" stroke="#e74c3c" stroke-width="1.5" stroke-dasharray="6,3" opacity="0.6"/>
             <text x="140" y="115" text-anchor="middle" font-size="11" fill="#c0392b" font-weight="700">恶性循环</text>
-            <!-- Nodes -->
             <rect x="90" y="15" width="100" height="26" rx="6" fill="#c0392b"/>
             <text x="140" y="32" text-anchor="middle" font-size="12" fill="white" font-weight="700">元认知削弱</text>
             <rect x="185" y="70" width="88" height="26" rx="6" fill="#e74c3c"/>
@@ -1333,7 +1253,6 @@
             <text x="60" y="172" text-anchor="middle" font-size="12" fill="white" font-weight="700">风险盲区</text>
             <rect x="8" y="70" width="80" height="26" rx="6" fill="#c0392b"/>
             <text x="48" y="87" text-anchor="middle" font-size="12" fill="white" font-weight="700">创新枯竭</text>
-            <!-- Arrows connecting them -->
             <line x1="140" y1="41" x2="200" y2="70" stroke="#e74c3c" stroke-width="1.5" marker-end="url(#arrowh)"/>
             <line x1="229" y1="96" x2="219" y2="155" stroke="#e74c3c" stroke-width="1.5" marker-end="url(#arrowh)"/>
             <line x1="175" y1="168" x2="100" y2="168" stroke="#e74c3c" stroke-width="1.5" marker-end="url(#arrowh)"/>
@@ -1360,7 +1279,7 @@
   </div>
   <div class="page-body">
     <div class="grid-3">
-      <div class="callout callout-warning" style="grid-column:1">
+      <div class="callout callout-warning">
         <div class="callout-label">元认知削弱（第一重危机）P11</div>
         <p>元认知削弱是认知空心化的第一重危机。当个体长期依赖AI进行思考，对自身思维过程的监控能力逐渐退化。</p>
         <h4 style="margin-top:12px">三个表现</h4>
@@ -1375,7 +1294,7 @@
           <p style="font-size:12px;color:var(--text-muted);margin-top:6px">参见主手册P21</p>
         </div>
       </div>
-      <div class="callout callout-warning" style="grid-column:2">
+      <div class="callout callout-warning">
         <div class="callout-label">判断力退化（第二重危机）P12</div>
         <p>当AI能够生成多套方案，个体逐渐从"决策者"退化为"接受者"。</p>
         <h4 style="margin-top:10px">退化三阶段</h4>
@@ -1391,7 +1310,7 @@
           <li>无AI决策：定期独立决策训练</li>
         </ul>
       </div>
-      <div class="callout callout-warning" style="grid-column:3">
+      <div class="callout callout-warning">
         <div class="callout-label">主体性丧失（第三重危机）P13</div>
         <p>个体逐渐从"思考的主体"退化为"AI输出的搬运工"。</p>
         <h4 style="margin-top:10px">三阶段滑坡</h4>
@@ -1580,24 +1499,9 @@
           <tr><th>层级</th><th>包含元能力</th><th>核心功能</th><th>训练建议</th></tr>
         </thead>
         <tbody>
-          <tr>
-            <td><span class="tag tag-gold">顶层 · 价值层</span></td>
-            <td><strong>价值判断</strong></td>
-            <td>确定"什么是对的"；涉及伦理权衡、利益平衡、长期价值评估</td>
-            <td>最后训练；需要底层和中层能力作为基础</td>
-          </tr>
-          <tr>
-            <td><span class="tag tag-navy">中层 · 操作层</span></td>
-            <td><strong>问题表征、假设检验、认知监控</strong><br>（认知监控组）<br><br><strong>关系构建、模式操作、模式速配</strong><br>（认知操作组）</td>
-            <td>执行复杂认知任务；两组六种能力协同工作</td>
-            <td>建议从认知监控开始，依次学习问题表征、假设检验，再进阶关系构建、模式操作、模式速配</td>
-          </tr>
-          <tr>
-            <td><span class="tag tag-sage">底层 · 决策层</span></td>
-            <td><strong>策略选择、体感映射</strong></td>
-            <td>为最终决策提供理性框架（策略选择）和直觉信号（体感映射）</td>
-            <td>建议优先训练底层；它为整个决策体系提供支撑</td>
-          </tr>
+          <tr><td><span class="tag tag-gold">顶层 · 价值层</span></td><td><strong>价值判断</strong></td><td>确定"什么是对的"；涉及伦理权衡、利益平衡、长期价值评估</td><td>最后训练；需要底层和中层能力作为基础</td></tr>
+          <tr><td><span class="tag tag-navy">中层 · 操作层</span></td><td><strong>问题表征、假设检验、认知监控</strong><br>（认知监控组）<br><br><strong>关系构建、模式操作、模式速配</strong><br>（认知操作组）</td><td>执行复杂认知任务；两组六种能力协同工作</td><td>建议从认知监控开始，依次学习问题表征、假设检验，再进阶关系构建、模式操作、模式速配</td></tr>
+          <tr><td><span class="tag tag-sage">底层 · 决策层</span></td><td><strong>策略选择、体感映射</strong></td><td>为最终决策提供理性框架（策略选择）和直觉信号（体感映射）</td><td>建议优先训练底层；它为整个决策体系提供支撑</td></tr>
         </tbody>
       </table>
     </div>
@@ -1831,9 +1735,7 @@
       <div>
         <div class="tbl-wrap">
           <table>
-            <thead>
-              <tr><th>元能力</th><th>层级</th><th>核心功能</th></tr>
-            </thead>
+            <thead><tr><th>元能力</th><th>层级</th><th>核心功能</th></tr></thead>
             <tbody>
               <tr><td><strong>认知监控</strong></td><td><span class="tag tag-navy">中层</span></td><td>实时觉察与调节认知过程</td></tr>
               <tr><td><strong>问题表征</strong></td><td><span class="tag tag-navy">中层</span></td><td>将模糊问题转化为清晰模型</td></tr>
@@ -1890,9 +1792,7 @@
     </div>
     <div class="tbl-wrap">
       <table>
-        <thead>
-          <tr><th>高阶能力</th><th>元能力组合</th><th>配方说明</th></tr>
-        </thead>
+        <thead><tr><th>高阶能力</th><th>元能力组合</th><th>配方说明</th></tr></thead>
         <tbody>
           <tr><td><strong>创新</strong></td><td>模式操作 + 关系构建 + 假设检验</td><td>从案例抽象模式 → 建立跨领域连接 → 验证创新假设</td></tr>
           <tr><td><strong>深度思考</strong></td><td>问题表征 + 认知监控 + 策略选择</td><td>重新定义问题 → 追踪思维过程 → 选择最优路径</td></tr>
@@ -1973,30 +1873,15 @@
     <div class="grid-3" style="margin:16px 0">
       <div class="callout callout-warning">
         <div class="callout-label">AI依赖者 ✗</div>
-        <ul style="font-size:13px">
-          <li>思考外包给AI</li>
-          <li>能力持续退化</li>
-          <li>高度可替代</li>
-          <li>风险敏感度低</li>
-        </ul>
+        <ul style="font-size:13px"><li>思考外包给AI</li><li>能力持续退化</li><li>高度可替代</li><li>风险敏感度低</li></ul>
       </div>
       <div class="callout callout-blue">
         <div class="callout-label">AI合作者 ◎</div>
-        <ul style="font-size:13px">
-          <li>与AI协同工作</li>
-          <li>保持认知主权</li>
-          <li>部分可替代</li>
-          <li>风险敏感度中</li>
-        </ul>
+        <ul style="font-size:13px"><li>与AI协同工作</li><li>保持认知主权</li><li>部分可替代</li><li>风险敏感度中</li></ul>
       </div>
       <div class="callout callout-sage">
         <div class="callout-label">认知增强人 ✓</div>
-        <ul style="font-size:13px">
-          <li>主动培养元能力</li>
-          <li>AI是认知放大器</li>
-          <li>不可替代</li>
-          <li>风险敏感度高</li>
-        </ul>
+        <ul style="font-size:13px"><li>主动培养元能力</li><li>AI是认知放大器</li><li>不可替代</li><li>风险敏感度高</li></ul>
       </div>
     </div>
     <div class="callout callout-insight">
@@ -2065,38 +1950,12 @@
     </div>
     <div class="tbl-wrap">
       <table>
-        <thead>
-          <tr><th>周次</th><th>情境</th><th>训练元能力</th><th>目标</th><th>详细日程</th></tr>
-        </thead>
+        <thead><tr><th>周次</th><th>情境</th><th>训练元能力</th><th>目标</th><th>详细日程</th></tr></thead>
         <tbody>
-          <tr>
-            <td><span class="tag tag-navy">第1周</span></td>
-            <td>面对模糊问题</td>
-            <td>问题表征、认知监控</td>
-            <td>重新定义问题</td>
-            <td>Day 1-2：选择一个模糊问题，用三个视角重新表述<br>Day 3-4：记录思维路径，识别卡顿点<br>Day 5：将问题重新定义，形成清晰模型<br>Day 6-7：复盘</td>
-          </tr>
-          <tr>
-            <td><span class="tag tag-navy">第2周</span></td>
-            <td>AI方案验证</td>
-            <td>假设检验、批判性思维</td>
-            <td>识别AI幻觉</td>
-            <td>Day 8-9：对AI输出的方案，提出反例假设<br>Day 10-11：验证假设，记录发现的幻觉<br>Day 12：用"如果…那么…"框架验证方案<br>Day 13-14：复盘</td>
-          </tr>
-          <tr>
-            <td><span class="tag tag-navy">第3周</span></td>
-            <td>成功案例迁移</td>
-            <td>模式操作、关系构建</td>
-            <td>跨领域迁移</td>
-            <td>Day 15-16：选择一个成功案例，抽象其模式<br>Day 17-18：将模式迁移到新场景，记录效果<br>Day 19：调整模式，使其适配新场景<br>Day 20-21：复盘</td>
-          </tr>
-          <tr>
-            <td><span class="tag tag-navy">第4周</span></td>
-            <td>多方案决策</td>
-            <td>策略选择、价值判断</td>
-            <td>最优决策</td>
-            <td>Day 22-23：面对多方案决策，强制生成三个方案<br>Day 24-25：用统一框架评估，做出选择<br>Day 26：记录身体信号，验证直觉判断<br>Day 27-28：复盘；Day 29-30：整体复盘，制定下一阶段计划</td>
-          </tr>
+          <tr><td><span class="tag tag-navy">第1周</span></td><td>面对模糊问题</td><td>问题表征、认知监控</td><td>重新定义问题</td><td>Day 1-2：选择一个模糊问题，用三个视角重新表述<br>Day 3-4：记录思维路径，识别卡顿点<br>Day 5：将问题重新定义，形成清晰模型<br>Day 6-7：复盘</td></tr>
+          <tr><td><span class="tag tag-navy">第2周</span></td><td>AI方案验证</td><td>假设检验、批判性思维</td><td>识别AI幻觉</td><td>Day 8-9：对AI输出的方案，提出反例假设<br>Day 10-11：验证假设，记录发现的幻觉<br>Day 12：用"如果…那么…"框架验证方案<br>Day 13-14：复盘</td></tr>
+          <tr><td><span class="tag tag-navy">第3周</span></td><td>成功案例迁移</td><td>模式操作、关系构建</td><td>跨领域迁移</td><td>Day 15-16：选择一个成功案例，抽象其模式<br>Day 17-18：将模式迁移到新场景，记录效果<br>Day 19：调整模式，使其适配新场景<br>Day 20-21：复盘</td></tr>
+          <tr><td><span class="tag tag-navy">第4周</span></td><td>多方案决策</td><td>策略选择、价值判断</td><td>最优决策</td><td>Day 22-23：面对多方案决策，强制生成三个方案<br>Day 24-25：用统一框架评估，做出选择<br>Day 26：记录身体信号，验证直觉判断<br>Day 27-28：复盘；Day 29-30：整体复盘，制定下一阶段计划</td></tr>
         </tbody>
       </table>
     </div>
@@ -2190,9 +2049,7 @@
       <div>
         <div class="tbl-wrap">
           <table>
-            <thead>
-              <tr><th>训练项目</th><th>具体行动</th><th>时间</th></tr>
-            </thead>
+            <thead><tr><th>训练项目</th><th>具体行动</th><th>时间</th></tr></thead>
             <tbody>
               <tr><td>晨间问题重构</td><td>选一个模糊问题，用三个视角重新表述</td><td>3分钟</td></tr>
               <tr><td>AI输出验证</td><td>对AI输出提出一个反例假设并验证</td><td>5分钟</td></tr>
@@ -2257,21 +2114,11 @@
         <div class="grid-2" style="gap:10px">
           <div class="callout callout-warning" style="padding:12px">
             <div class="callout-label">必须亲自做的事</div>
-            <ul style="font-size:13px">
-              <li>定义问题的核心</li>
-              <li>做价值判断和决策</li>
-              <li>验证AI输出的准确性</li>
-              <li>承担决策的责任</li>
-            </ul>
+            <ul style="font-size:13px"><li>定义问题的核心</li><li>做价值判断和决策</li><li>验证AI输出的准确性</li><li>承担决策的责任</li></ul>
           </div>
           <div class="callout callout-sage" style="padding:12px">
             <div class="callout-label">可以交给AI做的事</div>
-            <ul style="font-size:13px">
-              <li>信息检索和整理</li>
-              <li>生成多种方案选项</li>
-              <li>常规性写作初稿</li>
-              <li>数据分析和可视化</li>
-            </ul>
+            <ul style="font-size:13px"><li>信息检索和整理</li><li>生成多种方案选项</li><li>常规性写作初稿</li><li>数据分析和可视化</li></ul>
           </div>
         </div>
       </div>
