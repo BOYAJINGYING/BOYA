@@ -37,7 +37,7 @@
     --line-height: 1.85;
   }
 @media screen and (max-width: 768px) {
-    /* ✅ 保留：之前的单列修复（三列变单列） */
+    /* ✅ 保留：三列变单列（已验证有效） */
     .grid-3 {
         display: block !important;
         grid-template-columns: none !important;
@@ -50,29 +50,30 @@
         box-sizing: border-box;
     }
     
-    /* ✅ 新增：表格滑动修复（只影响表格，不影响上面） */
+    /* ✅ 新增：表格横向滚动（不影响上面） */
     table {
-        display: block;
-        width: 100%;
-        overflow-x: auto;
-        -webkit-overflow-scrolling: touch;
-        white-space: nowrap;
-        font-size: 12px;
+        display: block !important;
+        width: 100% !important;
+        overflow-x: auto !important;
+        -webkit-overflow-scrolling: touch !important;
+        white-space: nowrap !important;
+        font-size: 13px;
     }
     
     th, td {
-        white-space: nowrap !important; /* 防止文字换行，确保可以滑动 */
+        white-space: nowrap !important;
+        min-width: 100px !important;
         padding: 8px 10px !important;
-        min-width: 80px;
     }
     
-    /* 导航栏等其他适配 */
+    /* 导航栏适配 */
     #top-nav {
         flex-wrap: wrap !important;
         height: auto !important;
         padding: 10px !important;
     }
 }
+
 
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
