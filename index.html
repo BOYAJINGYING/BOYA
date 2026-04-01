@@ -37,42 +37,26 @@
     --line-height: 1.85;
   }
 @media screen and (max-width: 768px) {
-  .grid-3 { display: block !important; }
-  .callout { width: 100% !important; overflow: visible !important; }
-  
-  /* 暴力重置表格 */
-  table, thead, tbody, tr, th, td {
+  /* 只保留：三列变单列（这是唯一验证成功的） */
+  .grid-3 {
     display: block !important;
+    grid-template-columns: none !important;
+  }
+  
+  .callout, .callout-warning {
     width: 100% !important;
-    box-sizing: border-box !important;
-  }
-  
-  thead { display: none !important; }
-  
-  tr {
     margin-bottom: 15px !important;
-    border: 1px solid #ccc !important;
-    border-radius: 8px !important;
+    grid-column: auto !important;
+  }
+  
+  /* 导航栏 */
+  #top-nav {
+    flex-wrap: wrap !important;
+    height: auto !important;
     padding: 10px !important;
-    background: white !important;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.1) !important;
   }
-  
-  td {
-    border-bottom: 1px solid #eee !important;
-    padding: 8px 8px 8px 100px !important; /* 左边留100px给标签 */
-    position: relative !important;
-    text-align: left !important;
-  }
-  
-  td:last-child { border-bottom: none !important; }
-  
-  /* 用伪元素显示表头 */
-  td:nth-child(1):before { content: "日期："; position: absolute; left: 10px; font-weight: bold; color: var(--navy); }
-  td:nth-child(2):before { content: "情境："; position: absolute; left: 10px; font-weight: bold; color: var(--navy); }
-  td:nth-child(3):before { content: "运用元能力："; position: absolute; left: 10px; font-weight: bold; color: var(--navy); font-size: 12px; }
-  td:nth-child(4):before { content: "效果："; position: absolute; left: 10px; font-weight: bold; color: var(--navy); }
 }
+
 
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
