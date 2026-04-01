@@ -1,0 +1,2644 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>认知地震 — AI时代人类价值的底层重构 V12</title>
+<style>
+  :root {
+    --navy: #0f2642;
+    --navy-light: #1a3a5c;
+    --navy-mid: #1e4a7a;
+    --gold: #c9a227;
+    --gold-light: #e8bc3a;
+    --gold-pale: #fdf3d0;
+    --teal: #2a7b8c;
+    --teal-light: #3a9db3;
+    --rose: #c0392b;
+    --rose-light: #e74c3c;
+    --rose-pale: #fde8e6;
+    --sage: #2e7d5e;
+    --sage-pale: #e8f5ee;
+    --slate: #607080;
+    --text: #1a2535;
+    --text-light: #4a5568;
+    --text-muted: #718096;
+    --border: #d8e2ed;
+    --bg: #f7f9fc;
+    --white: #ffffff;
+    --page-w: 900px;
+    --radius: 10px;
+    --shadow: 0 2px 12px rgba(15,38,66,0.10);
+    --shadow-lg: 0 6px 28px rgba(15,38,66,0.16);
+    --font-body: 'PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;
+    --font-size-base: 15px;
+    --font-size-sm: 13px;
+    --font-size-xs: 12px;
+    --line-height: 1.85;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: var(--font-body);
+    font-size: var(--font-size-base);
+    line-height: var(--line-height);
+    color: var(--text);
+    background: var(--bg);
+  }
+
+  /* ── TOP STICKY NAV ── */
+  #top-nav {
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    background: var(--navy);
+    border-bottom: 2px solid var(--gold);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 24px;
+    height: 52px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.3);
+  }
+
+  #top-nav .nav-title {
+    color: var(--gold);
+    font-size: 15px;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    white-space: nowrap;
+  }
+
+  #top-nav .nav-links {
+    display: flex;
+    gap: 4px;
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    scrollbar-width: none;
+  }
+  #top-nav .nav-links::-webkit-scrollbar { display: none; }
+
+  #top-nav .nav-links a {
+    color: rgba(255,255,255,0.8);
+    text-decoration: none;
+    font-size: 13px;
+    padding: 6px 12px;
+    border-radius: 5px;
+    white-space: nowrap;
+    transition: all 0.2s;
+  }
+  #top-nav .nav-links a:hover { background: rgba(201,162,39,0.25); color: var(--gold); }
+
+  #top-nav .nav-badge {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+    flex-shrink: 0;
+  }
+  #top-nav .nav-badge span {
+    background: rgba(201,162,39,0.2);
+    color: var(--gold-light);
+    font-size: 11px;
+    padding: 3px 9px;
+    border-radius: 20px;
+    border: 1px solid rgba(201,162,39,0.4);
+    white-space: nowrap;
+  }
+
+  /* ── CHAPTER NAV BAR (secondary) ── */
+  .chapter-nav {
+    background: var(--navy-light);
+    display: flex;
+    align-items: center;
+    gap: 0;
+    padding: 0 24px;
+    overflow-x: auto;
+    scrollbar-width: none;
+    border-bottom: 1px solid rgba(255,255,255,0.08);
+  }
+  .chapter-nav::-webkit-scrollbar { display: none; }
+  .chapter-nav a {
+    color: rgba(255,255,255,0.65);
+    text-decoration: none;
+    font-size: 12px;
+    padding: 8px 14px;
+    white-space: nowrap;
+    transition: all 0.2s;
+    border-bottom: 2px solid transparent;
+  }
+  .chapter-nav a:hover, .chapter-nav a.active {
+    color: var(--gold);
+    border-bottom-color: var(--gold);
+  }
+
+  /* ── LAYOUT ── */
+  main {
+    max-width: var(--page-w);
+    margin: 0 auto;
+    padding: 32px 20px 80px;
+  }
+
+  /* ── PAGE SECTIONS ── */
+  .page {
+    background: var(--white);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+    margin-bottom: 24px;
+    overflow: hidden;
+    page-break-inside: avoid;
+  }
+
+  .page-header {
+    background: var(--navy);
+    padding: 14px 24px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    flex-wrap: wrap;
+  }
+
+  .page-header-left {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex-wrap: wrap;
+  }
+
+  .badge-chapter {
+    background: rgba(201,162,39,0.3);
+    border: 1px solid rgba(201,162,39,0.5);
+    color: var(--gold-light);
+    font-size: 12px;
+    font-weight: 600;
+    padding: 3px 10px;
+    border-radius: 5px;
+    white-space: nowrap;
+  }
+
+  .badge-type {
+    background: rgba(255,255,255,0.12);
+    color: rgba(255,255,255,0.7);
+    font-size: 11px;
+    padding: 2px 9px;
+    border-radius: 4px;
+    white-space: nowrap;
+  }
+
+  .page-title-text {
+    color: var(--white);
+    font-size: 16px;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+  }
+
+  .page-num {
+    background: rgba(201,162,39,0.25);
+    border: 1px solid rgba(201,162,39,0.45);
+    color: var(--gold-light);
+    font-size: 13px;
+    font-weight: 700;
+    padding: 4px 12px;
+    border-radius: 20px;
+    white-space: nowrap;
+    flex-shrink: 0;
+    font-variant-numeric: tabular-nums;
+  }
+
+  .page-body {
+    padding: 24px;
+  }
+
+  /* ── SPECIAL COVER PAGES ── */
+  .page-cover {
+    background: linear-gradient(155deg, #0a1e38 0%, #1a3a5c 60%, #0f2642 100%);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow-lg);
+    margin-bottom: 24px;
+    padding: 56px 40px;
+    text-align: center;
+    color: var(--white);
+    position: relative;
+    overflow: hidden;
+  }
+  .page-cover::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(ellipse at 50% 20%, rgba(201,162,39,0.12) 0%, transparent 70%);
+  }
+
+  .cover-icon { font-size: 56px; margin-bottom: 24px; display: block; }
+  .cover-title { font-size: 42px; font-weight: 800; color: var(--white); letter-spacing: 0.12em; margin-bottom: 10px; }
+  .cover-subtitle { font-size: 20px; color: var(--gold); font-weight: 600; margin-bottom: 32px; letter-spacing: 0.06em; }
+  .cover-cards { display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; margin-bottom: 32px; }
+  .cover-card {
+    background: rgba(255,255,255,0.08);
+    border: 1px solid rgba(201,162,39,0.3);
+    border-radius: 10px;
+    padding: 18px 28px;
+    min-width: 150px;
+  }
+  .cover-card-label { color: var(--gold); font-size: 14px; font-weight: 700; margin-bottom: 6px; }
+  .cover-card-range { color: rgba(255,255,255,0.85); font-size: 16px; font-weight: 700; margin-bottom: 4px; }
+  .cover-card-desc { color: rgba(255,255,255,0.55); font-size: 12px; }
+  .cover-callout {
+    background: rgba(255,255,255,0.07);
+    border: 1px solid rgba(201,162,39,0.25);
+    border-radius: 10px;
+    padding: 18px 28px;
+    max-width: 600px;
+    margin: 0 auto 24px;
+  }
+  .cover-callout-label { color: var(--gold); font-size: 12px; font-weight: 700; margin-bottom: 8px; letter-spacing: 0.1em; }
+  .cover-callout p { color: rgba(255,255,255,0.88); font-size: 14px; line-height: 1.7; }
+  .cover-meta { color: rgba(255,255,255,0.4); font-size: 12px; }
+
+  /* ── CONTENT BLOCKS ── */
+  .block { margin-bottom: 18px; }
+  .block:last-child { margin-bottom: 0; }
+
+  .callout {
+    border-radius: 8px;
+    padding: 16px 20px;
+    margin-bottom: 16px;
+  }
+  .callout-label {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    margin-bottom: 8px;
+    text-transform: uppercase;
+  }
+  .callout p, .callout li { font-size: 14px; line-height: 1.75; }
+
+  .callout-core { background: rgba(15,38,66,0.05); border-left: 3px solid var(--navy-mid); }
+  .callout-core .callout-label { color: var(--navy-mid); }
+
+  .callout-insight { background: var(--gold-pale); border-left: 3px solid var(--gold); }
+  .callout-insight .callout-label { color: #8a6a00; }
+  .callout-insight p { color: #5c4400; }
+
+  .callout-warning { background: var(--rose-pale); border-left: 3px solid var(--rose); }
+  .callout-warning .callout-label { color: var(--rose); }
+
+  .callout-sage { background: var(--sage-pale); border-left: 3px solid var(--sage); }
+  .callout-sage .callout-label { color: var(--sage); }
+
+  .callout-blue { background: #e8f0fa; border-left: 3px solid var(--navy-mid); }
+  .callout-blue .callout-label { color: var(--navy-mid); }
+
+  .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  .grid-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 14px; }
+
+  @media(max-width:680px) {
+    .grid-2, .grid-3 { grid-template-columns: 1fr; }
+  }
+
+  /* ── SECTION TITLES ── */
+  h2 {
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--navy);
+    margin: 0 0 12px;
+    padding-bottom: 8px;
+    border-bottom: 2px solid var(--border);
+  }
+  h3 {
+    font-size: 15px;
+    font-weight: 700;
+    color: var(--navy-mid);
+    margin: 16px 0 8px;
+  }
+  h4 {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--text);
+    margin: 12px 0 6px;
+  }
+
+  p { margin-bottom: 10px; font-size: 15px; }
+  p:last-child { margin-bottom: 0; }
+
+  ul, ol { padding-left: 22px; margin-bottom: 10px; }
+  li { margin-bottom: 5px; font-size: 14px; line-height: 1.7; }
+  li:last-child { margin-bottom: 0; }
+
+  strong { color: var(--navy); }
+  em { color: var(--rose); font-style: normal; font-weight: 600; }
+
+  /* ── HIGHLIGHT LIST (numbered colored) ── */
+  .hl-list { list-style: none; padding: 0; }
+  .hl-list li {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    padding: 10px 14px;
+    border-radius: 7px;
+    margin-bottom: 8px;
+    font-size: 14px;
+    background: #f0f4fa;
+    border-left: 3px solid var(--navy-mid);
+  }
+  .hl-list li.danger { background: var(--rose-pale); border-left-color: var(--rose); }
+  .hl-list li.gold { background: var(--gold-pale); border-left-color: var(--gold); }
+  .hl-list li.sage { background: var(--sage-pale); border-left-color: var(--sage); }
+  .hl-num {
+    background: var(--navy);
+    color: #fff;
+    font-size: 11px;
+    font-weight: 700;
+    min-width: 22px;
+    height: 22px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    margin-top: 1px;
+  }
+  .hl-list li.danger .hl-num { background: var(--rose); }
+  .hl-list li.gold .hl-num { background: #9a7200; }
+  .hl-list li.sage .hl-num { background: var(--sage); }
+
+  /* ── TABLE ── */
+  .tbl-wrap { overflow-x: auto; margin: 14px 0; }
+  table { width: 100%; border-collapse: collapse; font-size: 13.5px; }
+  th {
+    background: var(--navy);
+    color: var(--gold-light);
+    font-weight: 600;
+    padding: 9px 14px;
+    text-align: left;
+    white-space: nowrap;
+  }
+  td { padding: 8px 14px; border-bottom: 1px solid var(--border); vertical-align: top; line-height: 1.65; }
+  tr:nth-child(even) td { background: #f4f7fc; }
+  tr:hover td { background: #edf2fa; }
+
+  /* ── STEP BOX ── */
+  .step-flow { display: flex; gap: 0; flex-wrap: wrap; margin: 14px 0; }
+  .step {
+    flex: 1;
+    min-width: 120px;
+    background: #f0f4fa;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 12px 14px;
+    text-align: center;
+    position: relative;
+    margin: 4px;
+  }
+  .step-num {
+    background: var(--navy);
+    color: #fff;
+    font-size: 11px;
+    font-weight: 700;
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 8px;
+  }
+  .step-title { font-size: 13px; font-weight: 700; color: var(--navy); margin-bottom: 4px; }
+  .step-desc { font-size: 12px; color: var(--text-muted); line-height: 1.5; }
+
+  /* ── COMPETENCY CARDS ── */
+  .comp-cards { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin: 14px 0; }
+  @media(max-width:600px) { .comp-cards { grid-template-columns: 1fr 1fr; } }
+  .comp-card {
+    border-radius: 8px;
+    padding: 14px 16px;
+    border: 1px solid var(--border);
+    background: #f7faff;
+  }
+  .comp-card-title { font-size: 14px; font-weight: 700; color: var(--navy); margin-bottom: 6px; }
+  .comp-card-desc { font-size: 12.5px; color: var(--text-light); line-height: 1.6; }
+  .comp-card-tag {
+    display: inline-block;
+    background: rgba(15,38,66,0.08);
+    color: var(--navy-mid);
+    font-size: 11px;
+    padding: 2px 8px;
+    border-radius: 4px;
+    margin-bottom: 8px;
+  }
+
+  /* ── TOOL BOX ── */
+  .tool-box {
+    background: #f0f4fa;
+    border: 1px solid var(--border);
+    border-radius: 9px;
+    padding: 18px 20px;
+    margin: 14px 0;
+  }
+  .tool-box-title { font-size: 14px; font-weight: 700; color: var(--navy); margin-bottom: 10px; display: flex; align-items: center; gap: 8px; }
+  .tool-box-title::before { content: '🛠'; }
+  .tool-box p, .tool-box li { font-size: 13.5px; }
+
+  /* ── PRACTICE BOX ── */
+  .practice-box {
+    background: linear-gradient(135deg, var(--sage-pale), #f0f7ff);
+    border: 1px solid #b2d8c8;
+    border-radius: 9px;
+    padding: 18px 20px;
+    margin: 14px 0;
+  }
+  .practice-title { font-size: 13px; font-weight: 700; color: var(--sage); margin-bottom: 10px; letter-spacing: 0.05em; }
+  .practice-box p, .practice-box li { font-size: 13.5px; }
+
+  /* ── QUOTE ── */
+  blockquote {
+    border-left: 4px solid var(--gold);
+    background: var(--gold-pale);
+    padding: 14px 18px;
+    border-radius: 0 8px 8px 0;
+    margin: 14px 0;
+    font-size: 14.5px;
+    color: #5c4400;
+    font-style: italic;
+  }
+
+  /* ── FOOTNOTE ── */
+  .footnote {
+    background: rgba(15,38,66,0.04);
+    border-top: 1px solid var(--border);
+    padding: 10px 20px;
+    font-size: 11.5px;
+    color: var(--text-muted);
+    line-height: 1.6;
+  }
+
+  /* ── CHAPTER INTRO PAGE ── */
+  .chapter-intro {
+    background: linear-gradient(135deg, var(--navy) 0%, var(--navy-mid) 100%);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow-lg);
+    margin-bottom: 24px;
+    padding: 48px 36px;
+    text-align: center;
+    color: var(--white);
+    position: relative;
+    overflow: hidden;
+  }
+  .chapter-intro::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(ellipse at 50% 0%, rgba(201,162,39,0.15), transparent 60%);
+  }
+  .chapter-intro .ci-num { font-size: 14px; color: var(--gold); font-weight: 700; letter-spacing: 0.2em; margin-bottom: 12px; }
+  .chapter-intro .ci-title { font-size: 30px; font-weight: 800; margin-bottom: 14px; }
+  .chapter-intro .ci-desc { font-size: 15px; color: rgba(255,255,255,0.75); max-width: 520px; margin: 0 auto; line-height: 1.75; }
+  .chapter-intro .ci-page { margin-top: 20px; background: rgba(201,162,39,0.2); border: 1px solid rgba(201,162,39,0.4); color: var(--gold-light); font-size: 12px; padding: 4px 14px; border-radius: 20px; display: inline-block; }
+
+  /* ── TAG PILLS ── */
+  .tag { display: inline-block; padding: 3px 10px; border-radius: 20px; font-size: 12px; font-weight: 600; margin-right: 6px; margin-bottom: 6px; }
+  .tag-navy { background: rgba(15,38,66,0.1); color: var(--navy); border: 1px solid rgba(15,38,66,0.2); }
+  .tag-gold { background: rgba(201,162,39,0.15); color: #7a6000; border: 1px solid rgba(201,162,39,0.3); }
+  .tag-rose { background: var(--rose-pale); color: var(--rose); border: 1px solid rgba(192,57,43,0.2); }
+  .tag-sage { background: var(--sage-pale); color: var(--sage); border: 1px solid rgba(46,125,94,0.2); }
+
+  /* ── PROGRESS BAR ── */
+  .progress-bar {
+    background: var(--border);
+    border-radius: 4px;
+    height: 8px;
+    overflow: hidden;
+    margin: 6px 0 14px;
+  }
+  .progress-bar-fill { height: 100%; border-radius: 4px; background: linear-gradient(to right, var(--teal), var(--navy-mid)); }
+
+  /* ── DIVIDER ── */
+  .section-divider {
+    border: none;
+    border-top: 1px solid var(--border);
+    margin: 20px 0;
+  }
+
+  /* ── INLINE HIGHLIGHT ── */
+  .hl-gold { background: var(--gold-pale); color: #7a5c00; padding: 1px 5px; border-radius: 3px; font-weight: 600; }
+  .hl-rose { background: var(--rose-pale); color: var(--rose); padding: 1px 5px; border-radius: 3px; font-weight: 600; }
+  .hl-blue { background: #e8f0fa; color: var(--navy-mid); padding: 1px 5px; border-radius: 3px; font-weight: 600; }
+
+  /* ── SCROLL TO TOP ── */
+  #scroll-top {
+    position: fixed;
+    bottom: 28px;
+    right: 28px;
+    background: var(--navy);
+    color: var(--gold);
+    border: 1px solid rgba(201,162,39,0.4);
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    font-size: 18px;
+    box-shadow: var(--shadow-lg);
+    text-decoration: none;
+    transition: all 0.2s;
+    z-index: 999;
+  }
+  #scroll-top:hover { background: var(--navy-mid); }
+  @media print {
+    #scroll-top {
+      display: none;
+    }
+  }
+</style>
+</head>
+<body>
+
+<!-- TOP NAV -->
+<nav id="top-nav">
+  <div class="nav-title">⚡ 认知地震</div>
+  <div class="nav-links">
+    <a href="#cover">封面</a>
+    <a href="#toc">目录</a>
+    <a href="#ch1">第一章</a>
+    <a href="#ch2">第二章</a>
+    <a href="#ch3">第三章</a>
+    <a href="#ch4">第四章</a>
+    <a href="#ch5">第五章</a>
+    <a href="#supplement">补充手册</a>
+    <a href="#tools">工具索引</a>
+    <a href="#glossary">术语表</a>
+  </div>
+  <div class="nav-badge">
+    <span>V12 · 2026年3月</span>
+    <span>120页</span>
+  </div>
+</nav>
+
+<div class="chapter-nav">
+  <a href="#cover">封面</a>
+  <a href="#summary">执行摘要</a>
+  <a href="#toc">目录</a>
+  <a href="#ch1-intro">第一章：知识贬值</a>
+  <a href="#ch2-intro">第二章：元能力详解</a>
+  <a href="#ch3-intro">第三章：进化路径</a>
+  <a href="#ch4-intro">第四章：30天计划</a>
+  <a href="#ch5-intro">第五章：行动指南</a>
+  <a href="#supplement">补充手册</a>
+  <a href="#mod1">模块一</a>
+  <a href="#mod2">模块二</a>
+  <a href="#mod3">模块三</a>
+  <a href="#mod4">模块四</a>
+  <a href="#mod5">模块五</a>
+  <a href="#mod6">模块六</a>
+</div>
+
+<main>
+
+<!-- ══════════════════════════════
+     COVER
+══════════════════════════════ -->
+<div class="page-cover" id="cover">
+  <div class="cover-icon" style="font-size: 24px; font-weight: 600; line-height: 1.3; margin-bottom: 20px; color: #c0392b;">
+  中国生产力学会 X 博雅菁英教育科学研究院<br>新质生产力课题组
+</div>
+  <div class="cover-title">认知地震</div>
+  <div class="cover-subtitle">AI时代人类价值的底层重构</div>
+  <div class="cover-cards">
+    <div class="cover-card">
+      <div class="cover-card-label">主手册</div>
+      <div class="cover-card-range">P1 – P65</div>
+      <div class="cover-card-desc">行动指南</div>
+    </div>
+    <div class="cover-card">
+      <div class="cover-card-label">补充手册</div>
+      <div class="cover-card-range">P66 – P120</div>
+      <div class="cover-card-desc">理论溯源</div>
+    </div>
+  </div>
+  <div class="cover-callout">
+    <div class="cover-callout-label">核心命题</div>
+    <p>当知识获取成本趋近于零，人类的核心竞争力从"知识存量"转向"认知元能力"。本手册提供理论框架、实证证据与行动指南，助你成为AI时代的认知增强人。</p>
+  </div>
+  <div class="cover-meta">V12 | 2026年3月 · 主手册封面 · P 1 / 65</div>
+</div>
+
+<!-- ══════════════════════════════
+     P2 EXECUTIVE SUMMARY
+══════════════════════════════ -->
+<div class="page" id="summary">
+  <div class="page-header">
+    <div class="page-header-left">
+      <span class="badge-chapter">执行摘要</span>
+      <span class="badge-type">基础概念</span>
+      <span class="page-title-text">执行摘要：认知地震的核心命题</span>
+    </div>
+    <span class="page-num">P 2 / 65</span>
+  </div>
+  <div class="page-body">
+    <div class="grid-2">
+      <div>
+        <div class="callout callout-core">
+          <div class="callout-label">核心命题</div>
+          <p>当知识获取成本趋近于零，人类的核心竞争力从"知识存量"转向"认知元能力"。认知地震正在重塑每个人的价值根基。</p>
+        </div>
+        <div class="callout callout-insight">
+          <div class="callout-label">三个关键结论</div>
+          <ol class="hl-list">
+            <li class="gold"><span class="hl-num">1</span><span><strong>知识价值重构：</strong>显性知识获取成本趋近于零，动态运用能力的价值凸显</span></li>
+            <li class="gold"><span class="hl-num">2</span><span><strong>认知能力分化：</strong>独立思考能力成为核心竞争力，需主动维护</span></li>
+            <li class="gold"><span class="hl-num">3</span><span><strong>元能力崛起：</strong>九种跨领域认知能力构成AI时代价值高地</span></li>
+          </ol>
+        </div>
+        <p style="font-size:14px;color:var(--text-muted)">本手册提供理论框架、实证证据与行动指南，帮助读者成为AI时代的认知增强人。</p>
+      </div>
+      <div>
+        <div class="callout callout-blue">
+          <div class="callout-label">【图M-1】元能力价值分布坐标系</div>
+          <svg viewBox="0 0 340 260" style="width:100%;max-width:340px;display:block;margin:0 auto">
+            <defs>
+              <marker id="arrowh" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+                <path d="M0,0 L8,4 L0,8 Z" fill="#607080"/>
+              </marker>
+            </defs>
+            <!-- Axes -->
+            <line x1="40" y1="230" x2="320" y2="230" stroke="#607080" stroke-width="1.5" marker-end="url(#arrowh)"/>
+            <line x1="40" y1="230" x2="40" y2="20" stroke="#607080" stroke-width="1.5" marker-end="url(#arrowh)"/>
+            <!-- Axis labels -->
+            <text x="180" y="252" text-anchor="middle" font-size="11" fill="#607080">AI自动化程度</text>
+            <text x="16" y="125" text-anchor="middle" font-size="10" fill="#607080" transform="rotate(-90,16,125)">人类核心价值</text>
+            <text x="38" y="240" text-anchor="end" font-size="10" fill="#9aa8b8">低</text>
+            <text x="315" y="240" text-anchor="middle" font-size="10" fill="#9aa8b8">高</text>
+            <text x="38" y="230" text-anchor="end" font-size="10" fill="#9aa8b8">低</text>
+            <text x="38" y="24" text-anchor="end" font-size="10" fill="#9aa8b8">高</text>
+            <!-- High-value nodes (top-left zone) -->
+            <rect x="55" y="38" width="64" height="22" rx="5" fill="#1a3a5c" opacity="0.9"/>
+            <text x="87" y="53" text-anchor="middle" font-size="11" fill="#e8bc3a" font-weight="700">价值判断</text>
+            <rect x="130" y="46" width="64" height="22" rx="5" fill="#1a3a5c" opacity="0.9"/>
+            <text x="162" y="61" text-anchor="middle" font-size="11" fill="#e8bc3a" font-weight="700">关系构建</text>
+            <rect x="200" y="62" width="64" height="22" rx="5" fill="#1e4a7a" opacity="0.85"/>
+            <text x="232" y="77" text-anchor="middle" font-size="11" fill="#e8bc3a" font-weight="700">模式操作</text>
+            <rect x="62" y="82" width="64" height="22" rx="5" fill="#1a3a5c" opacity="0.85"/>
+            <text x="94" y="97" text-anchor="middle" font-size="11" fill="#e8bc3a" font-weight="700">体感映射</text>
+            <rect x="195" y="98" width="64" height="22" rx="5" fill="#1e4a7a" opacity="0.8"/>
+            <text x="227" y="113" text-anchor="middle" font-size="11" fill="#e8bc3a" font-weight="700">模式速配</text>
+            <rect x="80" y="120" width="64" height="22" rx="5" fill="#2a4a72" opacity="0.8"/>
+            <text x="112" y="135" text-anchor="middle" font-size="11" fill="#e8bc3a" font-weight="700">策略选择</text>
+            <!-- Mid zone -->
+            <rect x="148" y="146" width="64" height="22" rx="5" fill="#2a4a72" opacity="0.7"/>
+            <text x="180" y="161" text-anchor="middle" font-size="11" fill="#e8bc3a">问题表征</text>
+            <rect x="216" y="164" width="64" height="22" rx="5" fill="#3a5a88" opacity="0.65"/>
+            <text x="248" y="179" text-anchor="middle" font-size="11" fill="#e8bc3a">假设检验</text>
+            <rect x="86" y="178" width="64" height="22" rx="5" fill="#3a5a88" opacity="0.6"/>
+            <text x="118" y="193" text-anchor="middle" font-size="11" fill="#c9a227">认知监控</text>
+            <!-- Annotation -->
+            <text x="200" y="220" text-anchor="end" font-size="10" fill="#9aa8b8">← 元能力区域</text>
+          </svg>
+          <p style="font-size:11px;color:var(--text-muted);margin-top:8px">图注：AI自动化程度越高，人类越需向高价值区域迁移。<br>来源：本文设计，基于Autor et al. 2003技能极化模型拓展</p>
+        </div>
+      </div>
+    </div>
+    <div class="footnote">【阅读指引】主手册P 1−65提供行动指南 | 补充手册P 66−120提供理论溯源</div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════
+     P3 TABLE OF CONTENTS
+══════════════════════════════ -->
+<div class="page" id="toc">
+  <div class="page-header">
+    <div class="page-header-left">
+      <span class="badge-chapter">导航</span>
+      <span class="page-title-text">目录：认知地震手册导航</span>
+    </div>
+    <span class="page-num">P 3 / 65</span>
+  </div>
+  <div class="page-body">
+    <div class="grid-2">
+      <div>
+        <h3 style="color:var(--navy);font-size:15px;margin-bottom:12px">主手册（P1-65）：行动指南</h3>
+        <table style="font-size:14px">
+          <tr><td>封面与执行摘要</td><td style="color:var(--rose);font-weight:700;white-space:nowrap;text-align:right"><a href="#cover" style="color:var(--rose);text-decoration:none">P1-2</a></td></tr>
+          <tr><td>第一章：知识贬值危机</td><td style="color:var(--rose);font-weight:700;text-align:right"><a href="#ch1-intro" style="color:var(--rose);text-decoration:none">P6-15</a></td></tr>
+          <tr><td>第二章：九种元能力详解</td><td style="color:var(--rose);font-weight:700;text-align:right"><a href="#ch2-intro" style="color:var(--rose);text-decoration:none">P21-35</a></td></tr>
+          <tr><td>第三章：进化路径选择</td><td style="color:var(--rose);font-weight:700;text-align:right"><a href="#ch3-intro" style="color:var(--rose);text-decoration:none">P38-44</a></td></tr>
+          <tr><td>第四章：30天提升计划</td><td style="color:var(--rose);font-weight:700;text-align:right"><a href="#ch4-intro" style="color:var(--rose);text-decoration:none">P51-58</a></td></tr>
+          <tr><td>第五章：行动指南与结语</td><td style="color:var(--rose);font-weight:700;text-align:right"><a href="#ch5-intro" style="color:var(--rose);text-decoration:none">P59-65</a></td></tr>
+        </table>
+        <div class="callout callout-core" style="margin-top:14px">
+          <div class="callout-label">主手册核心工具</div>
+          <ul style="font-size:13px">
+            <li>图M-1 元能力价值分布坐标系 → <a href="#summary">P2</a></li>
+            <li>表M-1 专业技能价值变动趋势 → <a href="#p8">P8</a></li>
+            <li>工具T-1 认知健康快速自测表 → <a href="#p15">P15</a></li>
+            <li>工具T-5 九种元能力5分钟微练习 → <a href="#p35">P35</a></li>
+            <li>工具T-10 30天元能力提升计划 → <a href="#p51">P51</a></li>
+          </ul>
+        </div>
+      </div>
+      <div>
+        <h3 style="color:var(--teal);font-size:15px;margin-bottom:12px">补充手册（P66-120）：理论溯源</h3>
+        <table style="font-size:14px">
+          <tr><td>阅读导航</td><td style="color:var(--teal);font-weight:700;text-align:right"><a href="#supplement" style="color:var(--teal);text-decoration:none">P66</a></td></tr>
+          <tr><td>模块一：知识贬值机制</td><td style="color:var(--teal);font-weight:700;text-align:right"><a href="#mod1" style="color:var(--teal);text-decoration:none">P67-73</a></td></tr>
+          <tr><td>模块二：认知空心化证据</td><td style="color:var(--teal);font-weight:700;text-align:right"><a href="#mod2" style="color:var(--teal);text-decoration:none">P74-84</a></td></tr>
+          <tr><td>模块三：跨领域创新案例</td><td style="color:var(--teal);font-weight:700;text-align:right"><a href="#mod3" style="color:var(--teal);text-decoration:none">P85-91</a></td></tr>
+          <tr><td>模块四：深度思考方法论</td><td style="color:var(--teal);font-weight:700;text-align:right"><a href="#mod4" style="color:var(--teal);text-decoration:none">P92-98</a></td></tr>
+          <tr><td>模块五：组织与未来展望</td><td style="color:var(--teal);font-weight:700;text-align:right"><a href="#mod5" style="color:var(--teal);text-decoration:none">P99-105</a></td></tr>
+          <tr><td>模块六：学术资源库</td><td style="color:var(--teal);font-weight:700;text-align:right"><a href="#mod6" style="color:var(--teal);text-decoration:none">P106-120</a></td></tr>
+        </table>
+        <div class="callout callout-sage" style="margin-top:14px">
+          <div class="callout-label">分级阅读指引</div>
+          <ul style="font-size:13px">
+            <li><span class="tag tag-navy">基础概念</span> 入门读者</li>
+            <li><span class="tag tag-gold">进阶思考</span> 深度学习者</li>
+            <li><span class="tag tag-rose">专家视角</span> 研究者</li>
+          </ul>
+          <p style="font-size:13px;margin-top:8px">工具索引：<a href="#tools">P113</a> | 共14个工具</p>
+        </div>
+      </div>
+    </div>
+    <div class="footnote">【阅读建议】先通读主手册掌握核心框架，再深入补充手册进行学术探索</div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════
+     CHAPTER 1 INTRO
+══════════════════════════════ -->
+<div class="chapter-intro" id="ch1-intro">
+  <div class="ci-num">第一章</div>
+  <div class="ci-title">知识贬值危机</div>
+  <div class="ci-desc">知识曾是稀缺资源，是阶层跃迁的杠杆。AI时代，当知识获取成本趋近于零，静态知识壁垒消解，认知地震正在改写价值的定义。</div>
+  <div class="ci-page">主手册 P4 – P15</div>
+</div>
+
+<!-- P4 震源 -->
+<div class="page" id="p4">
+  <div class="page-header">
+    <div class="page-header-left">
+      <span class="badge-chapter">第一章</span>
+      <span class="badge-type">基础概念</span>
+      <span class="page-title-text">⚡ 震源：知识与认知的断层线</span>
+    </div>
+    <span class="page-num">P 4 / 65</span>
+  </div>
+  <div class="page-body">
+    <div class="grid-2">
+      <div>
+        <div class="callout callout-core">
+          <div class="callout-label">核心论点</div>
+          <p>"认知地震"源于一条断层线：知识与认知能力之间的断裂。当显性知识获取成本趋近于零时，这条断层线被激活，引发认知价值体系的重构。</p>
+        </div>
+        <h3>知识价值的重新定义</h3>
+        <p>显性知识的获取成本趋近于零，其作为静态壁垒的价值急剧下降；知识的动态运用、整合与创新能力价值凸显。知识不再是"资产"与"负债"的二元对立，而是需要转化为能力才能释放价值。</p>
+        <h4>知识获取成本的历史变迁</h4>
+        <ul class="hl-list">
+          <li><span class="hl-num">旧</span><span>传统教育：数年投入 → 获得知识存量</span></li>
+          <li class="gold"><span class="hl-num">新</span><span>AI时代：秒级检索 → 获取同等或更广的知识</span></li>
+        </ul>
+        <div class="callout callout-insight">
+          <div class="callout-label">核心洞察</div>
+          <p>从"拥有知识"到"运用知识"的能力，成为新的竞争优势。</p>
+        </div>
+      </div>
+      <div>
+        <div class="callout callout-blue">
+          <div class="callout-label">认知地震三阶段</div>
+          <ol class="hl-list">
+            <li><span class="hl-num">1</span><span><strong>知识价值重构</strong>——静态知识壁垒消解</span></li>
+            <li><span class="hl-num">2</span><span><strong>认知能力分化</strong>——元能力成为核心竞争力</span></li>
+            <li><span class="hl-num">3</span><span><strong>人机协同进化</strong>——认知增强人崛起</span></li>
+          </ol>
+        </div>
+        <div class="callout callout-core">
+          <div class="callout-label">断层线的本质</div>
+          <p>知识与认知能力之间的断裂。知识曾意味着竞争优势，AI时代，获取能力与运用能力——而非存量——成为新的稀缺资源。</p>
+          <p style="margin-top:10px;color:var(--rose);font-size:13.5px">认知地震正在重构每个人的价值根基。主动进化者将成为认知增强人，被动等待者可能沦为AI依赖者。</p>
+        </div>
+      </div>
+    </div>
+    <div class="footnote">【学术旁注】类比地质学断层线概念；Coase, 1937；Autor et al., 2003</div>
+  </div>
+</div>
+
+<!-- P5 认知地震三层震源 -->
+<div class="page" id="p5">
+  <div class="page-header">
+    <div class="page-header-left">
+      <span class="badge-chapter">第一章</span>
+      <span class="badge-type">基础概念</span>
+      <span class="page-title-text">📊 认知地震：AI时代人类价值的底层重构</span>
+    </div>
+    <span class="page-num">P 5 / 65</span>
+  </div>
+  <div class="page-body">
+    <div class="grid-2">
+      <div>
+        <div class="callout callout-core">
+          <div class="callout-label">核心论点</div>
+          <p>AI正在引发一场"认知地震"，重塑人类价值的根基。这场地震的震源，是知识与认知能力的断层线。</p>
+        </div>
+        <h3>认知地震的三层震源</h3>
+        <ul class="hl-list">
+          <li class="danger"><span class="hl-num">1</span><span><strong>知识贬值</strong>——低阶认知能力价值下降（表层现象）</span></li>
+          <li class="danger"><span class="hl-num">2</span><span><strong>认知空心化</strong>——独立思考能力退化（深层危机）</span></li>
+          <li class="sage"><span class="hl-num">3</span><span><strong>元能力觉醒</strong>——新价值体系建立（应对之道）</span></li>
+        </ul>
+      </div>
+      <div>
+        <div class="callout callout-blue">
+          <div class="callout-label">【图M-2】认知地震三层震源模型</div>
+          <div style="display:flex;flex-direction:column;gap:8px;padding:12px 0">
+            <div style="background:#2e7d5e;border-radius:8px;padding:12px 18px;color:#fff;text-align:center;font-weight:700">第三层：元能力觉醒</div>
+            <div style="background:#1e4a7a;border-radius:8px;padding:12px 18px;color:#fff;text-align:center;font-weight:700;margin:0 14px">第二层：认知空心化</div>
+            <div style="background:#c0392b;border-radius:8px;padding:12px 18px;color:#fff;text-align:center;font-weight:700;margin:0 28px">第一层：知识贬值</div>
+          </div>
+          <p style="font-size:12px;color:var(--text-muted);margin-top:8px">三层震源由下至上：知识贬值是表层现象，认知空心化是深层危机，元能力觉醒是应对之道。</p>
+        </div>
+      </div>
+    </div>
+    <div class="footnote">【阅读指引】主手册P 1−65提供行动指南 | 补充手册P 66−120提供理论溯源</div>
+  </div>
+</div>
+
+<!-- P6 知识贬值 -->
+<div class="page" id="p6">
+  <div class="page-header">
+    <div class="page-header-left">
+      <span class="badge-chapter">第一章</span>
+      <span class="badge-type">基础概念</span>
+      <span class="page-title-text">📉 知识贬值：从资产到负债</span>
+    </div>
+    <span class="page-num">P 6 / 65</span>
+  </div>
+  <div class="page-body">
+    <div class="grid-2">
+      <div>
+        <div class="callout callout-core">
+          <div class="callout-label">核心论点</div>
+          <p>知识曾是稀缺资源，是阶层跃迁的杠杆。但当AI能以毫秒级速度检索、整合、生成知识时，存量的"死知识"不再是竞争优势。</p>
+        </div>
+        <h3>知识贬值的三个维度</h3>
+        <ul class="hl-list">
+          <li class="danger"><span class="hl-num">1</span><span><strong>获取成本趋近于零：</strong>任何知识点都可在秒级获取</span></li>
+          <li class="danger"><span class="hl-num">2</span><span><strong>更新速度指数化：</strong>知识半衰期从年缩短至月</span></li>
+          <li class="danger"><span class="hl-num">3</span><span><strong>执行价值被压缩：</strong>标准化应用被AI接管</span></li>
+        </ul>
+        <div class="callout callout-insight">
+          <div class="callout-label">关键洞察</div>
+          <p>知识的"存量价值"下降，"运用价值"上升。如何定义问题、整合信息、做出判断——这些能力成为新的稀缺资源。</p>
+        </div>
+      </div>
+      <div>
+        <div class="callout callout-blue">
+          <div class="callout-label">知识形态演变</div>
+          <div class="grid-2" style="gap:8px">
+            <div style="background:#f0f4fa;border-radius:8px;padding:12px;font-size:13px"><strong>农业时代</strong><br>知识 = 经验传承</div>
+            <div style="background:#f0f4fa;border-radius:8px;padding:12px;font-size:13px"><strong>工业时代</strong><br>知识 = 专业分工</div>
+            <div style="background:#f0f4fa;border-radius:8px;padding:12px;font-size:13px"><strong>信息时代</strong><br>知识 = 信息处理</div>
+            <div style="background:var(--navy);border-radius:8px;padding:12px;font-size:13px;color:var(--gold)"><strong>AI时代</strong><br>知识 = 认知元能力</div>
+          </div>
+        </div>
+        <div class="callout callout-warning" style="margin-top:12px">
+          <div class="callout-label">技能半衰期缩短</div>
+          <p>世界经济论坛（WEF, 2025）报告显示：技能半衰期已缩短至2.5年。这意味着，一个人在大学学到的技能，毕业5年后可能已经过时。</p>
+          <p style="margin-top:8px"><strong>应对策略：</strong>从"知识积累"转向"能力培养"，特别是那些跨领域、不易过时的认知元能力。</p>
+        </div>
+      </div>
+    </div>
+    <div class="footnote">【学术旁注】World Economic Forum 2025. The Future of Jobs Report. Geneva: WEF.</div>
+  </div>
+</div>
+
+<!-- P7 技能半衰期 -->
+<div class="page" id="p7">
+  <div class="page-header">
+    <div class="page-header-left">
+      <span class="badge-chapter">第一章</span>
+      <span class="badge-type">基础概念</span>
+      <span class="page-title-text">⏱ 技能半衰期：从年到月</span>
+    </div>
+    <span class="page-num">P 7 / 65</span>
+  </div>
+  <div class="page-body">
+    <div class="grid-2">
+      <div>
+        <div class="callout callout-core">
+          <div class="callout-label">核心论点</div>
+          <p>技能半衰期——技能价值衰减一半所需的时间——正在急剧缩短。这意味着，持续学习不再是"加分项"，而是"生存项"。</p>
+        </div>
+        <h3>技能半衰期演变</h3>
+        <div style="margin:14px 0">
+          <div style="display:flex;align-items:center;gap:12px;margin-bottom:10px">
+            <span style="font-size:13px;color:var(--text-muted);width:70px">1950年代</span>
+            <div class="progress-bar" style="flex:1"><div class="progress-bar-fill" style="width:100%"></div></div>
+            <span style="font-size:13px;font-weight:700;color:var(--navy);width:60px">10-15年</span>
+          </div>
+          <div style="display:flex;align-items:center;gap:12px;margin-bottom:10px">
+            <span style="font-size:13px;color:var(--text-muted);width:70px">1990年代</span>
+            <div class="progress-bar" style="flex:1"><div class="progress-bar-fill" style="width:50%"></div></div>
+            <span style="font-size:13px;font-weight:700;color:var(--navy);width:60px">5-7年</span>
+          </div>
+          <div style="display:flex;align-items:center;gap:12px">
+            <span style="font-size:13px;color:var(--text-muted);width:70px">2020年代</span>
+            <div class="progress-bar" style="flex:1"><div class="progress-bar-fill" style="width:18%;background:linear-gradient(to right,var(--rose),#e74c3c)"></div></div>
+            <span style="font-size:13px;font-weight:700;color:var(--rose);width:60px">2.5年</span>
+          </div>
+        </div>
+        <div class="callout callout-warning">
+          <div class="callout-label">关键洞察</div>
+          <p>技能更新速度已超过人类传统学习周期的极限。</p>
+        </div>
+      </div>
+      <div>
+        <div class="callout callout-sage">
+          <div class="callout-label">元能力的优势</div>
+          <p>元能力因其跨领域特性，半衰期远长于具体技能。投资元能力，是应对技能贬值的杠杆策略。</p>
+          <p style="margin-top:10px"><strong>应对策略：</strong>从"技能积累"转向"能力培养"，特别是那些跨领域、不易过时的认知元能力。</p>
+        </div>
+        <div class="callout callout-blue" style="margin-top:12px">
+          <div class="callout-label">【图M-3】认知半衰期坐标系（示意）</div>
+          <svg viewBox="0 0 280 160" style="width:100%;display:block">
+            <line x1="30" y1="140" x2="265" y2="140" stroke="#607080" stroke-width="1.2"/>
+            <line x1="30" y1="140" x2="30" y2="15" stroke="#607080" stroke-width="1.2"/>
+            <text x="148" y="155" text-anchor="middle" font-size="10" fill="#607080">时间</text>
+            <text x="20" y="80" text-anchor="middle" font-size="9" fill="#607080" transform="rotate(-90,20,80)">技能价值</text>
+            <!-- Traditional skill line (steep decay) -->
+            <polyline points="35,30 90,55 140,95 185,122 230,135 260,138" fill="none" stroke="#1e4a7a" stroke-width="2.5"/>
+            <text x="262" y="140" font-size="10" fill="#1e4a7a">传统技能</text>
+            <!-- Meta ability (slow decay) -->
+            <polyline points="35,40 90,50 140,65 185,80 230,95 260,108" fill="none" stroke="#c9a227" stroke-width="2.5" stroke-dasharray="5,3"/>
+            <text x="242" y="105" font-size="10" fill="#c9a227">元能力</text>
+          </svg>
+        </div>
+      </div>
+    </div>
+    <div class="footnote">【学术旁注】World Economic Forum 2025. The Future of Jobs Report. Geneva: WEF.</div>
+  </div>
+</div>
+
+<!-- P8 专业贬值分析 -->
+<div class="page" id="p8">
+  <div class="page-header">
+    <div class="page-header-left">
+      <span class="badge-chapter">第一章</span>
+      <span class="badge-type">基础概念</span>
+      <span class="page-title-text">📉 专业贬值分析：技能价值重塑</span>
+    </div>
+    <span class="page-num">P 8 / 65</span>
+  </div>
+  <div class="page-body">
+    <div class="callout callout-core">
+      <div class="callout-label">核心论点</div>
+      <p>当执行被AI接管，职业价值重新分配。高标准化、低判断需求的技能快速贬值；需要深度判断、跨领域整合的能力价值上升。</p>
+      <p style="margin-top:8px"><strong>技能价值重估模型：</strong>技能价值 = 判断复杂度 × 不可替代性；AI替代低判断需求技能，放大高判断复杂度技能的价值。</p>
+    </div>
+    <div class="tbl-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>职业类型</th>
+            <th>价值变动趋势</th>
+            <th>数据来源</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td>初级编程</td><td><em>需求显著下降</em></td><td>World Economic Forum, 2025</td></tr>
+          <tr><td>基础翻译</td><td><em>单价大幅下降</em></td><td>行业报告, 2025</td></tr>
+          <tr><td>法律合同审计</td><td><em>基础条款审查贬值</em></td><td>行业报告, 2024</td></tr>
+          <tr><td>基础医疗诊断</td><td><em>影像初筛替代加速</em></td><td>医学AI综述, 2025</td></tr>
+          <tr><td>标准化文案</td><td><em>通稿类需求萎缩</em></td><td>广告行业数据, 2024</td></tr>
+          <tr><td style="color:var(--sage);font-weight:700">AI与机器学习专家</td><td style="color:var(--sage);font-weight:700">增长最快职业之一</td><td>WEF & LinkedIn, 2025</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="callout callout-insight">
+      <div class="callout-label">价值上升信号</div>
+      <p>需要复杂判断、跨领域整合、伦理权衡的职业价值持续上升。职业护城河正在从"知识壁垒"转向"认知能力壁垒"。</p>
+    </div>
+    <div class="footnote">【学术旁注】Autor, D. H., Levy, F., & Murnane, R. J. 2003. The skill content of recent technological change. Quarterly Journal of Economics, 118(4), 1279–1333.</div>
+  </div>
+</div>
+
+<!-- P9 技能陷阱 -->
+<div class="page" id="p9">
+  <div class="page-header">
+    <div class="page-header-left">
+      <span class="badge-chapter">第一章</span>
+      <span class="badge-type">基础概念</span>
+      <span class="page-title-text">⚠ 技能陷阱：中等技能者的困境</span>
+    </div>
+    <span class="page-num">P 9 / 65</span>
+  </div>
+  <div class="page-body">
+    <div class="grid-2">
+      <div>
+        <div class="callout callout-warning">
+          <div class="callout-label">核心论点</div>
+          <p>技能陷阱：当个体长期专注于可算法化的技能时，其认知结构被锁定在即将被AI完全接管的领域。</p>
+        </div>
+        <h3>技能陷阱的三重特征</h3>
+        <ul class="hl-list">
+          <li class="danger"><span class="hl-num">1</span><span><strong>路径依赖：</strong>过往投入成为转型的沉没成本</span></li>
+          <li class="danger"><span class="hl-num">2</span><span><strong>认知锁定：</strong>技能框架限制了对新机会的感知</span></li>
+          <li class="danger"><span class="hl-num">3</span><span><strong>价值误判：</strong>高估现有技能的稀缺性</span></li>
+        </ul>
+        <p style="font-size:13.5px;color:var(--text-muted);margin-top:12px"><strong>典型案例：</strong>传统会计、初级程序员、基础翻译——这些职业的共同特点是高度标准化、低判断需求。</p>
+        <div class="callout callout-insight" style="margin-top:12px">
+          <div class="callout-label">关键洞察</div>
+          <p>技能陷阱的本质是"认知锁定"——而非"技能过时"。打破陷阱需要认知层面的重构。</p>
+        </div>
+      </div>
+      <div>
+        <h3>逃离技能陷阱的策略</h3>
+        <ul class="hl-list">
+          <li class="sage"><span class="hl-num">1</span><span><strong>能力迁移：</strong>将现有技能抽象为通用能力，迁移到新领域</span></li>
+          <li class="sage"><span class="hl-num">2</span><span><strong>判断升级：</strong>从执行者升级为判断者，增加决策复杂度</span></li>
+          <li class="sage"><span class="hl-num">3</span><span><strong>元能力培养：</strong>系统培养九种认知元能力，构建抗贬值护城河</span></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footnote">【学术旁注】Autor, D. H., Levy, F., & Murnane, R. J. 2003. The skill content of recent technological change. QJE, 118(4), 1279–1333.</div>
+  </div>
+</div>
+
+<!-- P10 认知空心化 -->
+<div class="page" id="p10">
+  <div class="page-header">
+    <div class="page-header-left">
+      <span class="badge-chapter">第一章</span>
+      <span class="badge-type">进阶思考</span>
+      <span class="page-title-text">⚠ 认知空心化：五重危机</span>
+    </div>
+    <span class="page-num">P 10 / 65</span>
+  </div>
+  <div class="page-body">
+    <div class="grid-2">
+      <div>
+        <div class="callout callout-warning">
+          <div class="callout-label">核心论点</div>
+          <p>认知空心化指个体在长期依赖AI后，独立思考能力逐渐退化的过程。它表现为五重危机的闭环。</p>
+        </div>
+        <h3>认知空心化五重危机</h3>
+        <ul class="hl-list">
+          <li class="danger"><span class="hl-num">1</span><span><strong>元认知削弱：</strong>对思维过程的监控能力下降</span></li>
+          <li class="danger"><span class="hl-num">2</span><span><strong>判断力退化：</strong>复杂决策能力依赖AI</span></li>
+          <li class="danger"><span class="hl-num">3</span><span><strong>主体性丧失：</strong>从思考者变为接受者</span></li>
+          <li class="danger"><span class="hl-num">4</span><span><strong>风险盲区：</strong>无法识别AI的幻觉与偏见</span></li>
+          <li class="danger"><span class="hl-num">5</span><span><strong>创新枯竭：</strong>丧失从0到1的能力</span></li>
+        </ul>
+      </div>
+      <div>
+        <div class="callout callout-blue">
+          <div class="callout-label">【图M-4】五重危机闭环图</div>
+          <svg viewBox="0 0 280 220" style="width:100%;display:block">
+            <circle cx="140" cy="110" r="50" fill="none" stroke="#e74c3c" stroke-width="1.5" stroke-dasharray="6,3" opacity="0.6"/>
+            <text x="140" y="115" text-anchor="middle" font-size="11" fill="#c0392b" font-weight="700">恶性循环</text>
+            <!-- Nodes -->
+            <rect x="90" y="15" width="100" height="26" rx="6" fill="#c0392b"/>
+            <text x="140" y="32" text-anchor="middle" font-size="12" fill="white" font-weight="700">元认知削弱</text>
+            <rect x="185" y="70" width="88" height="26" rx="6" fill="#e74c3c"/>
+            <text x="229" y="87" text-anchor="middle" font-size="12" fill="white" font-weight="700">判断力退化</text>
+            <rect x="175" y="155" width="88" height="26" rx="6" fill="#e67e22"/>
+            <text x="219" y="172" text-anchor="middle" font-size="12" fill="white" font-weight="700">主体性丧失</text>
+            <rect x="20" y="155" width="80" height="26" rx="6" fill="#e67e22"/>
+            <text x="60" y="172" text-anchor="middle" font-size="12" fill="white" font-weight="700">风险盲区</text>
+            <rect x="8" y="70" width="80" height="26" rx="6" fill="#c0392b"/>
+            <text x="48" y="87" text-anchor="middle" font-size="12" fill="white" font-weight="700">创新枯竭</text>
+            <!-- Arrows connecting them -->
+            <line x1="140" y1="41" x2="200" y2="70" stroke="#e74c3c" stroke-width="1.5" marker-end="url(#arrowh)"/>
+            <line x1="229" y1="96" x2="219" y2="155" stroke="#e74c3c" stroke-width="1.5" marker-end="url(#arrowh)"/>
+            <line x1="175" y1="168" x2="100" y2="168" stroke="#e74c3c" stroke-width="1.5" marker-end="url(#arrowh)"/>
+            <line x1="48" y1="155" x2="80" y2="96" stroke="#e74c3c" stroke-width="1.5" marker-end="url(#arrowh)"/>
+            <line x1="88" y1="83" x2="140" y2="41" stroke="#e74c3c" stroke-width="1.5" marker-end="url(#arrowh)"/>
+          </svg>
+          <p style="font-size:11.5px;color:var(--text-muted);margin-top:6px">五重危机形成闭环：每一重都会加剧其他四重。打破闭环的关键在于重建元认知。</p>
+        </div>
+      </div>
+    </div>
+    <div class="footnote">【阅读指引】主手册P 1−65提供行动指南 | 补充手册P 66−120提供理论溯源</div>
+  </div>
+</div>
+
+<!-- P11-14 Cognitive hollowing details (condensed) -->
+<div class="page" id="p11">
+  <div class="page-header">
+    <div class="page-header-left">
+      <span class="badge-chapter">第一章</span>
+      <span class="badge-type">进阶思考</span>
+      <span class="page-title-text">🔒 元认知削弱 · 判断力退化 · 主体性丧失</span>
+    </div>
+    <span class="page-num">P 11 – 13 / 65</span>
+  </div>
+  <div class="page-body">
+    <div class="grid-3">
+      <div class="callout callout-warning" style="grid-column:1">
+        <div class="callout-label">元认知削弱（第一重危机）P11</div>
+        <p>元认知削弱是认知空心化的第一重危机。当个体长期依赖AI进行思考，对自身思维过程的监控能力逐渐退化。</p>
+        <h4 style="margin-top:12px">三个表现</h4>
+        <ul style="font-size:13px">
+          <li><strong>思维路径不透明：</strong>无法复述推理过程</li>
+          <li><strong>卡顿感知迟钝：</strong>难以识别思考中的断点</li>
+          <li><strong>偏离觉察缺失：</strong>对目标偏离的敏感度下降</li>
+        </ul>
+        <div class="tool-box" style="margin-top:10px">
+          <div class="tool-box-title">思维回放仪（工具T-7）</div>
+          <p>深度思考后，回放思维过程，记录：<br>① 情绪波动点；② 思维卡顿点<br>目的：将隐性的认知过程显性化。</p>
+          <p style="font-size:12px;color:var(--text-muted);margin-top:6px">参见主手册P21</p>
+        </div>
+      </div>
+      <div class="callout callout-warning" style="grid-column:2">
+        <div class="callout-label">判断力退化（第二重危机）P12</div>
+        <p>当AI能够生成多套方案，个体逐渐从"决策者"退化为"接受者"。</p>
+        <h4 style="margin-top:10px">退化三阶段</h4>
+        <ul style="font-size:13px">
+          <li>阶段一：用AI生成多个方案，自己选择 ✓</li>
+          <li>阶段二：默认选择AI推荐的第一方案 ⚠</li>
+          <li>阶段三：完全依赖AI，丧失判断能力 ✗</li>
+        </ul>
+        <h4 style="margin-top:10px">应对策略</h4>
+        <ul style="font-size:13px">
+          <li>强制多方案：AI后自己再生成一个</li>
+          <li>权衡记录：记录选择依据</li>
+          <li>无AI决策：定期独立决策训练</li>
+        </ul>
+      </div>
+      <div class="callout callout-warning" style="grid-column:3">
+        <div class="callout-label">主体性丧失（第三重危机）P13</div>
+        <p>个体逐渐从"思考的主体"退化为"AI输出的搬运工"。</p>
+        <h4 style="margin-top:10px">三阶段滑坡</h4>
+        <ul style="font-size:13px">
+          <li>第一阶段：用AI辅助，自己把关</li>
+          <li>第二阶段：用AI生成，自己修饰</li>
+          <li>第三阶段：用AI输出，自己转发 ✗</li>
+        </ul>
+        <h4 style="margin-top:10px">应对策略</h4>
+        <ul style="font-size:13px">
+          <li>认知主权宣言：明确哪些思考绝不外包</li>
+          <li>原创配额：每周至少产出一个非AI辅助的想法</li>
+          <li>署名权意识：只对真正参与思考的部分署名</li>
+        </ul>
+      </div>
+    </div>
+    <div class="footnote">【学术旁注】Flavell, 1979；Kahneman, 2011；参见补充手册P83"认知增强人"定义</div>
+  </div>
+</div>
+
+<!-- P14 London Taxi Experiment -->
+<div class="page" id="p14">
+  <div class="page-header">
+    <div class="page-header-left">
+      <span class="badge-chapter">第一章</span>
+      <span class="badge-type">进阶思考</span>
+      <span class="page-title-text">🧠 伦敦出租车司机实验：神经可塑性的证据</span>
+    </div>
+    <span class="page-num">P 14 / 65</span>
+  </div>
+  <div class="page-body">
+    <div class="grid-2">
+      <div>
+        <div class="callout callout-core">
+          <div class="callout-label">核心论点</div>
+          <p>大脑的结构与功能因使用方式而改变。伦敦出租车司机实验证明：空间导航的长期训练使海马体体积增大——"用进废退"原则适用于认知能力。</p>
+        </div>
+        <h3>Maguire et al. 2000 研究发现</h3>
+        <p>伦敦出租车司机需通过"知识测试"——背诵25,000条街道与数千地标。</p>
+        <p style="margin-top:8px"><strong>结果：</strong>司机海马体后部灰质体积显著增大，且体积与从业年限正相关。相反，长期依赖GPS的司机，海马体体积较小。</p>
+        <div class="callout callout-insight" style="margin-top:12px">
+          <div class="callout-label">"用进废退"</div>
+          <p>认知能力的生物基础正是如此。如果GPS使海马体萎缩，那么AI辅助决策会使哪个脑区退化？<strong>前额叶——负责逻辑推演、抑制冲动、规划未来的核心区域。</strong></p>
+        </div>
+      </div>
+      <div>
+        <div class="callout callout-blue">
+          <div class="callout-label">脑区激活对比（概念示意）</div>
+          <ul class="hl-list" style="margin-top:8px">
+            <li class="sage"><span class="hl-num">✓</span><span><strong>人类独立推演</strong><br>dlPFC（背外侧前额叶）+ 海马体协同激活</span></li>
+            <li class="danger"><span class="hl-num">⚠</span><span><strong>AI辅助推演</strong><br>上述脑区可能参与度降低，代偿性激活感官刺激回路</span></li>
+          </ul>
+          <p style="font-size:13px;margin-top:10px;color:var(--text-light)">延伸思考：外包逻辑推演可能影响大脑的"导航能力"。这一结论需要更多纵向研究验证，但"用进废退"的原则已有充分的生物学支持。</p>
+        </div>
+      </div>
+    </div>
+    <div class="footnote">【学术旁注】Maguire et al., 2000；Kandel, 2000《神经可塑性》</div>
+  </div>
+</div>
+
+<!-- P15 认知健康自测 -->
+<div class="page" id="p15">
+  <div class="page-header">
+    <div class="page-header-left">
+      <span class="badge-chapter">第一章</span>
+      <span class="badge-type">基础概念 · 工具T-1</span>
+      <span class="page-title-text">📋 认知健康快速自测表</span>
+    </div>
+    <span class="page-num">P 15 / 65</span>
+  </div>
+  <div class="page-body">
+    <div class="grid-2">
+      <div>
+        <div class="callout callout-core">
+          <div class="callout-label">核心论点</div>
+          <p>认知健康是AI时代生存的基石。以下自测表帮助个体快速评估认知状态。</p>
+        </div>
+        <div class="tool-box">
+          <div class="tool-box-title">认知健康九项自测</div>
+          <ol style="font-size:13.5px;line-height:2">
+            <li>我能清晰复述自己解决一个复杂问题的完整思维路径。□是 □否</li>
+            <li>在无AI辅助下，我能独立完成30分钟以上的深度思考。□是 □否</li>
+            <li>我对AI给出的答案保持批判性验证习惯。□是 □否</li>
+            <li>我能识别出AI输出中的事实瑕疵。□是 □否</li>
+            <li>我有定期复盘思维过程的习惯。□是 □否</li>
+            <li>我能跨领域迁移已有的知识模式。□是 □否</li>
+            <li>在信息不足时，我能做出有依据的判断。□是 □否</li>
+            <li>我对算法推荐保持警惕，主动打破信息茧房。□是 □否</li>
+            <li>在完全不联网的情况下，我能否对一个陌生领域进行15分钟的逻辑拆解？□能 □不能</li>
+          </ol>
+        </div>
+      </div>
+      <div>
+        <div class="callout callout-insight">
+          <div class="callout-label">评估标准</div>
+          <ul style="font-size:14px;line-height:2">
+            <li><strong>8–9项"是"：</strong>认知健康，继续保持并强化</li>
+            <li><strong>5–7项"是"：</strong>轻度空心化，启动干预计划</li>
+            <li><strong>≤4项"是"：</strong>严重空心化，需系统性认知训练</li>
+          </ul>
+        </div>
+        <div class="callout callout-sage" style="margin-top:12px">
+          <div class="callout-label">评估说明</div>
+          <p>勾选第9项"不能"者，建议优先进行"无AI逻辑推演训练"。</p>
+          <p style="margin-top:8px">建议每月自测一次，跟踪认知健康变化。若发现退化信号，立即启动干预。</p>
+        </div>
+      </div>
+    </div>
+    <div class="footnote">【工具说明】本文设计，基于认知科学与临床心理学原理</div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════
+     CHAPTER 2 INTRO
+══════════════════════════════ -->
+<div class="chapter-intro" id="ch2-intro">
+  <div class="ci-num">第二章</div>
+  <div class="ci-title">九种元能力详解</div>
+  <div class="ci-desc">元能力是"关于能力的能力"——跨领域、可迁移的认知操作能力。掌握元能力，即可灵活构建任何高阶能力。这就像掌握笔画后，能写出任何汉字。</div>
+  <div class="ci-page">主手册 P16 – P35</div>
+</div>
+
+<!-- P16 元能力概述 -->
+<div class="page" id="p16">
+  <div class="page-header">
+    <div class="page-header-left">
+      <span class="badge-chapter">第二章</span>
+      <span class="badge-type">基础概念</span>
+      <span class="page-title-text">⭐ 九种元能力：AI时代的核心竞争力</span>
+    </div>
+    <span class="page-num">P 16 / 65</span>
+  </div>
+  <div class="page-body">
+    <div class="grid-2">
+      <div>
+        <div class="callout callout-core">
+          <div class="callout-label">核心论点</div>
+          <p>九种元能力是AI时代人类的核心竞争力，它们具有跨领域迁移性，不易被AI替代。</p>
+        </div>
+        <h3>元能力的定义</h3>
+        <p>元能力是"关于能力的能力"——它们不是具体的技能，而是跨领域、可迁移的认知操作能力。它们构成高阶能力的基础。</p>
+        <div class="callout callout-insight">
+          <div class="callout-label">关键洞察</div>
+          <p>掌握元能力，即可灵活构建任何高阶能力。这就像掌握笔画后，能写出任何汉字。</p>
+        </div>
+      </div>
+      <div>
+        <div class="callout callout-blue">
+          <div class="callout-label">三层架构（图M-5）</div>
+          <div style="display:flex;flex-direction:column;gap:8px;padding:8px 0">
+            <div style="background:var(--gold);border-radius:8px;padding:10px 14px;text-align:center">
+              <div style="font-size:11px;color:rgba(0,0,0,0.6);margin-bottom:4px">顶层 · 价值层</div>
+              <div style="font-weight:700;color:var(--navy)">价值判断</div>
+            </div>
+            <div style="background:#1e4a7a;border-radius:8px;padding:10px 14px;text-align:center">
+              <div style="font-size:11px;color:rgba(255,255,255,0.6);margin-bottom:4px">中层 · 操作层</div>
+              <div style="font-weight:700;color:white;font-size:13px">问题表征 · 假设检验 · 认知监控<br>关系构建 · 模式操作 · 模式速配</div>
+            </div>
+            <div style="background:#2e7d5e;border-radius:8px;padding:10px 14px;text-align:center">
+              <div style="font-size:11px;color:rgba(255,255,255,0.6);margin-bottom:4px">底层 · 决策层</div>
+              <div style="font-weight:700;color:white">策略选择 · 体感映射</div>
+            </div>
+          </div>
+          <p style="font-size:11.5px;color:var(--text-muted);margin-top:6px">底层提供决策支持，中层执行认知操作，顶层确立价值方向。</p>
+        </div>
+      </div>
+    </div>
+    <div class="footnote">【阅读指引】主手册P 1−65提供行动指南 | 补充手册P 66−120提供理论溯源</div>
+  </div>
+</div>
+
+<!-- P17-20 三层架构详解 (condensed) -->
+<div class="page" id="p17">
+  <div class="page-header">
+    <div class="page-header-left">
+      <span class="badge-chapter">第二章</span>
+      <span class="badge-type">基础概念</span>
+      <span class="page-title-text">🗂 元能力三层架构详解</span>
+    </div>
+    <span class="page-num">P 17 – 20 / 65</span>
+  </div>
+  <div class="page-body">
+    <div class="tbl-wrap">
+      <table>
+        <thead>
+          <tr><th>层级</th><th>包含元能力</th><th>核心功能</th><th>训练建议</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><span class="tag tag-gold">顶层 · 价值层</span></td>
+            <td><strong>价值判断</strong></td>
+            <td>确定"什么是对的"；涉及伦理权衡、利益平衡、长期价值评估</td>
+            <td>最后训练；需要底层和中层能力作为基础</td>
+          </tr>
+          <tr>
+            <td><span class="tag tag-navy">中层 · 操作层</span></td>
+            <td><strong>问题表征、假设检验、认知监控</strong><br>（认知监控组）<br><br><strong>关系构建、模式操作、模式速配</strong><br>（认知操作组）</td>
+            <td>执行复杂认知任务；两组六种能力协同工作</td>
+            <td>建议从认知监控开始，依次学习问题表征、假设检验，再进阶关系构建、模式操作、模式速配</td>
+          </tr>
+          <tr>
+            <td><span class="tag tag-sage">底层 · 决策层</span></td>
+            <td><strong>策略选择、体感映射</strong></td>
+            <td>为最终决策提供理性框架（策略选择）和直觉信号（体感映射）</td>
+            <td>建议优先训练底层；它为整个决策体系提供支撑</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="callout callout-insight">
+      <div class="callout-label">架构说明</div>
+      <p>原文P19将"决策支持层"（策略选择、体感映射）命名混乱——正确分层如上表所示。底层与顶层均服务于决策，中层两组六种能力执行认知操作。建议按此顺序由下至上训练。</p>
+    </div>
+    <div class="footnote">【学术旁注】本文分类框架，基于Flavell 1979元认知理论、Klein 1998自然主义决策理论整合</div>
+  </div>
+</div>
+
+<!-- P21-30 九种元能力详解 -->
+<div class="page" id="p21">
+  <div class="page-header">
+    <div class="page-header-left">
+      <span class="badge-chapter">第二章</span>
+      <span class="badge-type">基础概念</span>
+      <span class="page-title-text">🔍 九种元能力详解（一）：认知监控 · 问题表征 · 假设检验</span>
+    </div>
+    <span class="page-num">P 21 – 25 / 65</span>
+  </div>
+  <div class="page-body">
+    <div class="grid-3">
+      <!-- 元能力一：认知监控 -->
+      <div>
+        <div class="callout callout-core">
+          <div class="callout-label">元能力一：认知监控 <span class="tag tag-navy">中层</span></div>
+          <p>对自身认知过程的实时觉察与调节能力。在AI时代，认知监控是防止认知外包的第一道防线。</p>
+        </div>
+        <h4>定义与构成（Flavell, 1979）</h4>
+        <ul style="font-size:13px">
+          <li><strong>元认知知识：</strong>关于认知过程的知识（"我知道我的记忆有限"）</li>
+          <li><strong>元监控：</strong>实时跟踪认知状态（"我是否偏离了目标？"）</li>
+          <li><strong>元调节：</strong>动态调整认知策略（"换个角度试试"）</li>
+        </ul>
+        <div class="practice-box">
+          <div class="practice-title">【思维回放仪】工具T-7</div>
+          <p>处理完复杂问题后，用3分钟回放思维过程，记录：<br>① 情绪波动点（焦虑/困惑/兴奋？）<br>② 思维卡顿点（哪里反复徘徊？）<br>目的：将隐性的认知过程显性化。</p>
+        </div>
+      </div>
+
+      <!-- 元能力二：问题表征 -->
+      <div>
+        <div class="callout callout-core">
+          <div class="callout-label">元能力二：问题表征 <span class="tag tag-navy">中层</span></div>
+          <p>将模糊问题转化为清晰模型的能力。大多数决策失误源于问题定义错误，而非解决方案错误。</p>
+        </div>
+        <h4>核心步骤</h4>
+        <ul style="font-size:13px">
+          <li><strong>识别核心矛盾：</strong>问题背后的真正张力是什么？</li>
+          <li><strong>定义边界条件：</strong>哪些约束是刚性的？</li>
+          <li><strong>多视角重构：</strong>换位思考，看到不同维度的矛盾</li>
+        </ul>
+        <blockquote>爱因斯坦曾说：如果给他1小时解决一个问题，他会用55分钟定义问题，5分钟解决。</blockquote>
+        <div class="practice-box">
+          <div class="practice-title">【练习】问题重构</div>
+          <p>原问题：________________<br>增强人表征：________________<br>每周选一个模糊问题，用三种视角重新定义。</p>
+        </div>
+      </div>
+
+      <!-- 元能力三：假设检验 -->
+      <div>
+        <div class="callout callout-core">
+          <div class="callout-label">元能力三：假设检验 <span class="tag tag-navy">中层</span></div>
+          <p>主动寻找反例验证观点的能力，是批判性思维的核心，也是对抗AI幻觉的第一道防线。</p>
+        </div>
+        <h4>波普尔的证伪主义（Popper, 1959）</h4>
+        <p style="font-size:13px">科学理论的本质是"可证伪性"——一个理论只有当存在可能推翻它的观察时，才是有意义的。应用：对AI输出保持"可证伪"态度，主动寻找反例。</p>
+        <div class="practice-box">
+          <div class="practice-title">【反向证伪练习】工具T-9</div>
+          <p>当收到AI给出的方案时，强制回答：<br>"如果AI给出的答案是100%正确的，那么导致它失效的那个1%概率事件是什么？"<br>每次使用AI后，强制提出至少一个"如果…那么…"的反例假设。</p>
+        </div>
+      </div>
+    </div>
+    <div class="footnote">【学术旁注】Flavell 1979；Chi et al. 1981；Popper 1959</div>
+  </div>
+</div>
+
+<!-- P23-28 关系构建、模式操作、模式速配 -->
+<div class="page" id="p23">
+  <div class="page-header">
+    <div class="page-header-left">
+      <span class="badge-chapter">第二章</span>
+      <span class="badge-type">基础概念</span>
+      <span class="page-title-text">🔗 九种元能力详解（二）：关系构建 · 模式操作 · 模式速配</span>
+    </div>
+    <span class="page-num">P 23 – 27 / 65</span>
+  </div>
+  <div class="page-body">
+    <div class="grid-3">
+      <!-- 元能力四：关系构建 -->
+      <div>
+        <div class="callout callout-core">
+          <div class="callout-label">元能力四：关系构建 <span class="tag tag-navy">中层</span></div>
+          <p>发现概念间底层连接的能力，是跨领域创新的认知基础。专家能够看到看似无关的事物之间的深层联系。</p>
+        </div>
+        <h4>核心步骤</h4>
+        <ul style="font-size:13px">
+          <li>识别表层差异：看到两个概念的不同</li>
+          <li>寻找底层共性：发现抽象层面的连接</li>
+          <li>构建映射关系：建立可迁移的对应</li>
+        </ul>
+        <p style="font-size:13px"><strong>案例：</strong>生物学"进化"→ 经济学"市场竞争"→ 产品"迭代优化"——跨领域的关系构建。</p>
+        <div class="practice-box">
+          <div class="practice-title">【练习】每周将两个不相关概念连接</div>
+          <p>概念A：________<br>概念B：________<br>底层共性：________</p>
+        </div>
+      </div>
+
+      <!-- 元能力五：模式操作 -->
+      <div>
+        <div class="callout callout-core">
+          <div class="callout-label">元能力五：模式操作 <span class="tag tag-navy">中层</span></div>
+          <p>从具体案例抽象通用模式，并将其迁移到新场景的能力。这是专家与新手的本质区别。</p>
+        </div>
+        <h4>核心步骤</h4>
+        <ul style="font-size:13px">
+          <li><strong>抽象：</strong>从案例提取关键变量与关系</li>
+          <li><strong>编码：</strong>将抽象结果转化为可迁移的模式</li>
+          <li><strong>迁移：</strong>将模式应用到新场景</li>
+        </ul>
+        <p style="font-size:13px"><strong>案例：</strong>成功的产品发布会 → 抽象为"仪式感+稀缺性+故事化"模式 → 迁移到课程设计。</p>
+        <div class="practice-box">
+          <div class="practice-title">【练习】模式提取与迁移（工具T-14）</div>
+          <p>成功案例：________<br>抽象模式：________<br>迁移场景：________</p>
+        </div>
+      </div>
+
+      <!-- 元能力六：模式速配 -->
+      <div>
+        <div class="callout callout-core">
+          <div class="callout-label">元能力六：模式速配 <span class="tag tag-navy">中层</span></div>
+          <p>快速识别问题属于哪类模式的能力，是专家直觉的认知基础。专家能在几秒内识别问题类型，调用相应的解决模式。</p>
+        </div>
+        <h4>机制（Klein, 1998）</h4>
+        <ul style="font-size:13px">
+          <li>模式识别："这像什么？"——激活经验库</li>
+          <li>典型响应："这种情况通常怎么做？"</li>
+          <li>快速调整：根据具体条件微调</li>
+        </ul>
+        <div class="practice-box">
+          <div class="practice-title">【练习】模式速配训练</div>
+          <p>面对问题时，快速回答：<br>问题：________<br>这像：________<br>可能方案：________</p>
+        </div>
+      </div>
+    </div>
+    <div class="footnote">【学术旁注】Gentner 1983；Chi et al. 1981；Klein 1998</div>
+  </div>
+</div>
+
+<!-- P27-30 价值判断、体感映射、策略选择 -->
+<div class="page" id="p27">
+  <div class="page-header">
+    <div class="page-header-left">
+      <span class="badge-chapter">第二章</span>
+      <span class="badge-type">基础概念</span>
+      <span class="page-title-text">⚖ 九种元能力详解（三）：价值判断 · 体感映射 · 策略选择</span>
+    </div>
+    <span class="page-num">P 27 – 30 / 65</span>
+  </div>
+  <div class="page-body">
+    <div class="grid-3">
+      <!-- 元能力七：价值判断 -->
+      <div>
+        <div class="callout callout-core">
+          <div class="callout-label">元能力七：价值判断 <span class="tag tag-gold">顶层</span></div>
+          <p>在复杂情境下确定"什么是对的"的能力。AI可以提供选项，但无法替代人类做出价值判断。</p>
+        </div>
+        <h4>核心要素</h4>
+        <ul style="font-size:13px">
+          <li>利益相关方识别：谁是受影响者？</li>
+          <li>价值权重分配：不同价值的优先级？</li>
+          <li>长期影响评估：短期利益 vs 长期代价</li>
+          <li>伦理边界确认：哪些底线不可逾越？</li>
+        </ul>
+        <div class="practice-box">
+          <div class="practice-title">【练习】价值判断框架</div>
+          <p>决策前，列出三个利益相关方及其受影响方式：<br>相关方1：____ 影响：____<br>相关方2：____ 影响：____<br>相关方3：____ 影响：____</p>
+        </div>
+      </div>
+
+      <!-- 元能力八：体感映射 -->
+      <div>
+        <div class="callout callout-core">
+          <div class="callout-label">元能力八：体感映射 <span class="tag tag-sage">底层</span></div>
+          <p>将抽象概念转化为身体感知的能力，是直觉判断的底层机制。专家通过身体信号识别风险，而非仅依赖逻辑分析。</p>
+        </div>
+        <h4>具身认知理论（Lakoff & Johnson, 1999）</h4>
+        <p style="font-size:13px">认知科学研究表明：抽象概念通过身体隐喻被理解。"压力"被感知为"重"，"风险"被感知为"紧绷"。专家直觉本质上是身体化的模式识别。</p>
+        <div class="practice-box">
+          <div class="practice-title">【身体雷达练习】工具T-8</div>
+          <p>重大决策前，暂停1分钟，记录：<br>· 胃部是否紧绷？<br>· 呼吸是否加速？<br>· 手心是否微汗？<br>· 肩膀是否僵硬？</p>
+        </div>
+      </div>
+
+      <!-- 元能力九：策略选择 -->
+      <div>
+        <div class="callout callout-core">
+          <div class="callout-label">元能力九：策略选择 <span class="tag tag-sage">底层</span></div>
+          <p>在多个可行方案中选择最优路径的能力。AI可以生成方案，但人类必须做出最终选择。</p>
+        </div>
+        <h4>核心步骤</h4>
+        <ul style="font-size:13px">
+          <li>方案生成：AI辅助 + 人工补充</li>
+          <li>评估框架：确定评估维度与权重</li>
+          <li>方案比较：多维度打分对比</li>
+          <li>风险评估：每个方案的最坏情况</li>
+        </ul>
+        <div class="practice-box">
+          <div class="practice-title">【练习】强制多方案生成</div>
+          <p>方案A：____ 评分：____<br>方案B：____ 评分：____<br>方案C：____ 评分：____<br>选择：____ 依据：____</p>
+        </div>
+      </div>
+    </div>
+    <div class="footnote">【学术旁注】Lakoff & Johnson 1999；Kahneman 2011；Schön 1983</div>
+  </div>
+</div>
+
+<!-- P31 九种元能力总览 -->
+<div class="page" id="p31">
+  <div class="page-header">
+    <div class="page-header-left">
+      <span class="badge-chapter">第二章</span>
+      <span class="badge-type">综述</span>
+      <span class="page-title-text">📊 九种元能力总览：AI时代的核心竞争力图谱</span>
+    </div>
+    <span class="page-num">P 31 / 65</span>
+  </div>
+  <div class="page-body">
+    <div class="grid-2">
+      <div>
+        <div class="tbl-wrap">
+          <table>
+            <thead>
+              <tr><th>元能力</th><th>层级</th><th>核心功能</th></tr>
+            </thead>
+            <tbody>
+              <tr><td><strong>认知监控</strong></td><td><span class="tag tag-navy">中层</span></td><td>实时觉察与调节认知过程</td></tr>
+              <tr><td><strong>问题表征</strong></td><td><span class="tag tag-navy">中层</span></td><td>将模糊问题转化为清晰模型</td></tr>
+              <tr><td><strong>假设检验</strong></td><td><span class="tag tag-navy">中层</span></td><td>主动寻找反例验证观点</td></tr>
+              <tr><td><strong>关系构建</strong></td><td><span class="tag tag-navy">中层</span></td><td>发现概念间的底层连接</td></tr>
+              <tr><td><strong>模式操作</strong></td><td><span class="tag tag-navy">中层</span></td><td>从案例抽象通用模式并迁移</td></tr>
+              <tr><td><strong>模式速配</strong></td><td><span class="tag tag-navy">中层</span></td><td>快速识别问题属于哪类模式</td></tr>
+              <tr><td><strong>价值判断</strong></td><td><span class="tag tag-gold">顶层</span></td><td>在复杂情境下确定"什么是对的"</td></tr>
+              <tr><td><strong>体感映射</strong></td><td><span class="tag tag-sage">底层</span></td><td>将身体信号转化为直觉判断</td></tr>
+              <tr><td><strong>策略选择</strong></td><td><span class="tag tag-sage">底层</span></td><td>在多方案中选择最优路径</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <div>
+        <div class="callout callout-insight">
+          <div class="callout-label">元能力训练建议</div>
+          <ul class="hl-list">
+            <li class="sage"><span class="hl-num">1</span><span><strong>起始：</strong>认知监控（P21）——建立元认知基础</span></li>
+            <li class="sage"><span class="hl-num">2</span><span><strong>进阶：</strong>问题表征、假设检验——核心操作能力</span></li>
+            <li class="sage"><span class="hl-num">3</span><span><strong>深化：</strong>关系构建、模式操作——创新能力</span></li>
+            <li class="sage"><span class="hl-num">4</span><span><strong>整合：</strong>体感映射、策略选择——决策支持</span></li>
+            <li class="sage"><span class="hl-num">5</span><span><strong>顶层：</strong>价值判断——在前四步基础上培养</span></li>
+          </ul>
+        </div>
+        <div class="callout callout-sage" style="margin-top:12px">
+          <div class="callout-label">工具索引</div>
+          <ul style="font-size:13px">
+            <li>微练习工具：<a href="#p35">P35</a>（工具T-5）</li>
+            <li>30天计划：<a href="#p51">P51</a>（工具T-10）</li>
+            <li>里程碑卡：<a href="#p120">P120</a>（工具T-12）</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div class="footnote">【阅读指引】主手册P 1−65提供行动指南 | 补充手册P 66−120提供理论溯源</div>
+  </div>
+</div>
+
+<!-- P34 元能力配方表 -->
+<div class="page" id="p34">
+  <div class="page-header">
+    <div class="page-header-left">
+      <span class="badge-chapter">第二章</span>
+      <span class="badge-type">实操工具</span>
+      <span class="page-title-text">🧪 元能力配方表：高阶能力的组合</span>
+    </div>
+    <span class="page-num">P 34 / 65</span>
+  </div>
+  <div class="page-body">
+    <div class="callout callout-core">
+      <div class="callout-label">核心论点</div>
+      <p>高阶能力由多种元能力组合而成。掌握元能力的组合规则，即可灵活构建任何高阶能力。</p>
+    </div>
+    <div class="tbl-wrap">
+      <table>
+        <thead>
+          <tr><th>高阶能力</th><th>元能力组合</th><th>配方说明</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><strong>创新</strong></td><td>模式操作 + 关系构建 + 假设检验</td><td>从案例抽象模式 → 建立跨领域连接 → 验证创新假设</td></tr>
+          <tr><td><strong>深度思考</strong></td><td>问题表征 + 认知监控 + 策略选择</td><td>重新定义问题 → 追踪思维过程 → 选择最优路径</td></tr>
+          <tr><td><strong>批判性思维</strong></td><td>假设检验 + 价值判断 + 认知监控</td><td>寻找反例 → 多目标权衡 → 监控偏见</td></tr>
+          <tr><td><strong>问题解决</strong></td><td>问题表征 + 模式速配 + 策略选择</td><td>清晰定义问题 → 快速识别模式 → 选最优方案</td></tr>
+          <tr><td><strong>直觉判断</strong></td><td>模式速配 + 体感映射 + 认知监控</td><td>激活经验库 → 读取身体信号 → 监控判断过程</td></tr>
+          <tr><td><strong>跨领域学习</strong></td><td>关系构建 + 模式操作 + 假设检验</td><td>发现跨域联系 → 迁移模式 → 验证迁移效果</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="callout callout-insight" style="margin-top:14px">
+      <div class="callout-label">训练建议</div>
+      <p>先掌握单个元能力，再练习组合应用。每个高阶能力都需要反复练习才能熟练。相关工具：九种元能力微练习（P35）、30天提升计划（P51）。</p>
+    </div>
+    <div class="footnote">【阅读指引】主手册P 1−65提供行动指南 | 补充手册P 66−120提供理论溯源</div>
+  </div>
+</div>
+
+<!-- P35 微练习工具箱 -->
+<div class="page" id="p35">
+  <div class="page-header">
+    <div class="page-header-left">
+      <span class="badge-chapter">第二章</span>
+      <span class="badge-type">实操工具 · 工具T-5</span>
+      <span class="page-title-text">💪 九种元能力：5分钟微练习工具箱</span>
+    </div>
+    <span class="page-num">P 35 / 65</span>
+  </div>
+  <div class="page-body">
+    <div class="callout callout-core" style="margin-bottom:16px">
+      <div class="callout-label">核心说明</div>
+      <p>以下微练习可嵌入日常工作流，每次仅需5分钟。持续练习可强化对应元能力，让理论立刻可行动。</p>
+    </div>
+    <div class="grid-3">
+      <div class="tool-box"><div class="tool-box-title" style="font-size:13px">1. 问题表征</div><p style="font-size:13px">每天选一个模糊问题，用"三个视角"重新表述，记录差异。</p></div>
+      <div class="tool-box"><div class="tool-box-title" style="font-size:13px">2. 假设检验</div><p style="font-size:13px">对每条AI输出，强制提出一个"如果…那么…"的反例假设。</p></div>
+      <div class="tool-box"><div class="tool-box-title" style="font-size:13px">3. 认知监控</div><p style="font-size:13px">深度思考后用3分钟记录"我在想什么"，追踪思维路径。</p></div>
+      <div class="tool-box"><div class="tool-box-title" style="font-size:13px">4. 关系构建</div><p style="font-size:13px">每周将两个不相关概念连接，寻找共同底层结构。</p></div>
+      <div class="tool-box"><div class="tool-box-title" style="font-size:13px">5. 模式操作</div><p style="font-size:13px">将一个成功案例抽象为通用模式，迁移到新场景。</p></div>
+      <div class="tool-box"><div class="tool-box-title" style="font-size:13px">6. 模式速配</div><p style="font-size:13px">面对问题时快速识别"这像什么"，激活经验库。</p></div>
+      <div class="tool-box"><div class="tool-box-title" style="font-size:13px">7. 价值判断</div><p style="font-size:13px">决策前列出三个利益相关方，分别标注对他们的影响。</p></div>
+      <div class="tool-box"><div class="tool-box-title" style="font-size:13px">8. 体感映射</div><p style="font-size:13px">重要决策前暂停1分钟，记录胃部、呼吸、手心的信号。</p></div>
+      <div class="tool-box"><div class="tool-box-title" style="font-size:13px">9. 策略选择</div><p style="font-size:13px">决策前强制生成三个方案，用统一标准评估。</p></div>
+    </div>
+    <div class="callout callout-insight" style="margin-top:14px">
+      <div class="callout-label">每日练习建议</div>
+      <p>早晨选1种元能力练习，睡前复盘效果。持续21天可初步建立习惯。建议从"认知监控"或"问题表征"开始，这两个是其他能力的基础。</p>
+    </div>
+    <div class="footnote">【工具说明】本文设计；参考Ericsson, 2006《刻意练习》</div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════
+     CHAPTER 3 INTRO
+══════════════════════════════ -->
+<div class="chapter-intro" id="ch3-intro">
+  <div class="ci-num">第三章</div>
+  <div class="ci-title">进化路径选择</div>
+  <div class="ci-desc">面对认知地震，个体有三条进化路径：AI依赖者、AI合作者、认知增强人。你的选择决定了未来的不可替代性。</div>
+  <div class="ci-page">主手册 P32 – P44</div>
+</div>
+
+<!-- P32 三条进化路径 -->
+<div class="page" id="p32">
+  <div class="page-header">
+    <div class="page-header-left">
+      <span class="badge-chapter">第三章</span>
+      <span class="badge-type">基础概念</span>
+      <span class="page-title-text">🚀 进化路径选择：从AI依赖者到认知增强人</span>
+    </div>
+    <span class="page-num">P 32 / 65</span>
+  </div>
+  <div class="page-body">
+    <div class="callout callout-core">
+      <div class="callout-label">核心论点</div>
+      <p>面对认知地震，个体有三条进化路径：AI依赖者、AI合作者、认知增强人。选择决定了未来的职业竞争力。</p>
+    </div>
+    <div class="grid-3" style="margin:16px 0">
+      <div class="callout callout-warning">
+        <div class="callout-label">AI依赖者 ✗</div>
+        <ul style="font-size:13px">
+          <li>思考外包给AI</li>
+          <li>能力持续退化</li>
+          <li>高度可替代</li>
+          <li>风险敏感度低</li>
+        </ul>
+      </div>
+      <div class="callout callout-blue">
+        <div class="callout-label">AI合作者 ◎</div>
+        <ul style="font-size:13px">
+          <li>与AI协同工作</li>
+          <li>保持认知主权</li>
+          <li>部分可替代</li>
+          <li>风险敏感度中</li>
+        </ul>
+      </div>
+      <div class="callout callout-sage">
+        <div class="callout-label">认知增强人 ✓</div>
+        <ul style="font-size:13px">
+          <li>主动培养元能力</li>
+          <li>AI是认知放大器</li>
+          <li>不可替代</li>
+          <li>风险敏感度高</li>
+        </ul>
+      </div>
+    </div>
+    <div class="callout callout-insight">
+      <div class="callout-label">关键洞察</div>
+      <p>认知增强人是AI时代最优的进化路径——既利用AI的优势，又保持人类的不可替代性。建议阅读：补充手册P83"认知增强人定义"。</p>
+    </div>
+    <div class="footnote">【阅读指引】主手册P 1−65提供行动指南 | 补充手册P 66−120提供理论溯源</div>
+  </div>
+</div>
+
+<!-- P33 深度思考六步迭代法 -->
+<div class="page" id="p33">
+  <div class="page-header">
+    <div class="page-header-left">
+      <span class="badge-chapter">第三章</span>
+      <span class="badge-type">实操方法</span>
+      <span class="page-title-text">🧠 深度思考：六步迭代法</span>
+    </div>
+    <span class="page-num">P 33 / 65</span>
+  </div>
+  <div class="page-body">
+    <div class="callout callout-core">
+      <div class="callout-label">核心论点</div>
+      <p>深度思考是可以训练的。六步迭代法提供了一个结构化的深度思考框架，帮助个体在AI时代保持独立思考能力。</p>
+    </div>
+    <div class="step-flow" style="margin:16px 0">
+      <div class="step"><div class="step-num">1</div><div class="step-title">问题表征</div><div class="step-desc">重新定义问题</div></div>
+      <div class="step"><div class="step-num">2</div><div class="step-title">假设生成</div><div class="step-desc">列出所有可能</div></div>
+      <div class="step"><div class="step-num">3</div><div class="step-title">假设检验</div><div class="step-desc">主动寻找反例</div></div>
+      <div class="step"><div class="step-num">4</div><div class="step-title">模式识别</div><div class="step-desc">找到底层结构</div></div>
+      <div class="step"><div class="step-num">5</div><div class="step-title">策略选择</div><div class="step-desc">评估与决策</div></div>
+      <div class="step"><div class="step-num">6</div><div class="step-title">认知监控</div><div class="step-desc">全程追踪调整</div></div>
+    </div>
+    <div class="callout callout-insight">
+      <div class="callout-label">应用建议</div>
+      <p>面对复杂问题时，按六步法顺序思考。每一步都可以迭代，直到获得满意结论。六步法允许在任何步骤回退——"纠错红利"（Schön, 1983）：每一次回退并非失败，而是在错误路径早期识别，节省大量后续沉没成本。</p>
+    </div>
+    <div class="footnote">【阅读指引】主手册P 1−65提供行动指南 | 补充手册P 66−120提供理论溯源；详见补充手册P92-98</div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════
+     CHAPTER 4 INTRO
+══════════════════════════════ -->
+<div class="chapter-intro" id="ch4-intro">
+  <div class="ci-num">第四章</div>
+  <div class="ci-title">30天元能力提升计划</div>
+  <div class="ci-desc">情境驱动的月度能力提升路线图。在真实工作场景中训练，每周聚焦一个情境，综合训练多种元能力。</div>
+  <div class="ci-page">主手册 P51 – 58 · 工具T-10</div>
+</div>
+
+<!-- P51 30天计划 -->
+<div class="page" id="p51">
+  <div class="page-header">
+    <div class="page-header-left">
+      <span class="badge-chapter">第四章</span>
+      <span class="badge-type">实操工具 · 工具T-10</span>
+      <span class="page-title-text">📅 30天元能力提升计划</span>
+    </div>
+    <span class="page-num">P 51 – 52 / 65</span>
+  </div>
+  <div class="page-body">
+    <div class="callout callout-core">
+      <div class="callout-label">核心说明</div>
+      <p>本计划采用情境驱动模式：每周聚焦一个真实工作情境，在该情境中综合训练多种元能力。建议在工作日执行练习，周末进行复盘。</p>
+    </div>
+    <div class="tbl-wrap">
+      <table>
+        <thead>
+          <tr><th>周次</th><th>情境</th><th>训练元能力</th><th>目标</th><th>详细日程</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><span class="tag tag-navy">第1周</span></td>
+            <td>面对模糊问题</td>
+            <td>问题表征、认知监控</td>
+            <td>重新定义问题</td>
+            <td>Day 1-2：选择一个模糊问题，用三个视角重新表述<br>Day 3-4：记录思维路径，识别卡顿点<br>Day 5：将问题重新定义，形成清晰模型<br>Day 6-7：复盘</td>
+          </tr>
+          <tr>
+            <td><span class="tag tag-navy">第2周</span></td>
+            <td>AI方案验证</td>
+            <td>假设检验、批判性思维</td>
+            <td>识别AI幻觉</td>
+            <td>Day 8-9：对AI输出的方案，提出反例假设<br>Day 10-11：验证假设，记录发现的幻觉<br>Day 12：用"如果…那么…"框架验证方案<br>Day 13-14：复盘</td>
+          </tr>
+          <tr>
+            <td><span class="tag tag-navy">第3周</span></td>
+            <td>成功案例迁移</td>
+            <td>模式操作、关系构建</td>
+            <td>跨领域迁移</td>
+            <td>Day 15-16：选择一个成功案例，抽象其模式<br>Day 17-18：将模式迁移到新场景，记录效果<br>Day 19：调整模式，使其适配新场景<br>Day 20-21：复盘</td>
+          </tr>
+          <tr>
+            <td><span class="tag tag-navy">第4周</span></td>
+            <td>多方案决策</td>
+            <td>策略选择、价值判断</td>
+            <td>最优决策</td>
+            <td>Day 22-23：面对多方案决策，强制生成三个方案<br>Day 24-25：用统一框架评估，做出选择<br>Day 26：记录身体信号，验证直觉判断<br>Day 27-28：复盘；Day 29-30：整体复盘，制定下一阶段计划</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="callout callout-insight">
+      <div class="callout-label">进度追踪</div>
+      <p>建议每周填写"里程碑卡"（P120），记录元能力应用的真实瞬间。能力提升需要持续练习——完成30天计划后，建议继续进行第二轮、第三轮训练。</p>
+    </div>
+    <div class="footnote">【工具说明】本文设计；参考Ericsson, 2006《刻意练习》</div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════
+     CHAPTER 5 INTRO
+══════════════════════════════ -->
+<div class="chapter-intro" id="ch5-intro">
+  <div class="ci-num">第五章</div>
+  <div class="ci-title">行动指南与结语</div>
+  <div class="ci-desc">认知地震正在重塑每个人的价值根基。选择成为认知增强人，意味着主动培养元能力，将AI作为认知放大器而非替代品。</div>
+  <div class="ci-page">主手册 P37 – 65</div>
+</div>
+
+<!-- P38 认知主权宣言 -->
+<div class="page" id="p38">
+  <div class="page-header">
+    <div class="page-header-left">
+      <span class="badge-chapter">第五章</span>
+      <span class="badge-type">基础概念</span>
+      <span class="page-title-text">🛡 认知主权宣言</span>
+    </div>
+    <span class="page-num">P 38 / 65</span>
+  </div>
+  <div class="page-body">
+    <div class="grid-2">
+      <div>
+        <div class="callout callout-core">
+          <div class="callout-label">核心论点</div>
+          <p>认知主权是指个体对自身思维过程的主权。在AI时代，保持认知主权意味着明确哪些思考绝不外包给AI。</p>
+        </div>
+        <blockquote>"我不将AI视为思考的替代品，而是认知的放大器。我保持对思维过程的主权，主动验证AI输出，持续培养元能力，在AI时代实现认知进化。"<br><span style="font-size:12px;opacity:0.7">——这不是对AI的拒绝，而是对人类主体性的确认。</span></blockquote>
+        <h3>行动指南五大原则</h3>
+        <ul class="hl-list">
+          <li class="sage"><span class="hl-num">1</span><span>保持认知主权，明确不外包的领域</span></li>
+          <li class="sage"><span class="hl-num">2</span><span>主动验证AI输出，培养批判性思维</span></li>
+          <li class="sage"><span class="hl-num">3</span><span>持续训练元能力，保持认知韧性</span></li>
+          <li class="sage"><span class="hl-num">4</span><span>建立无AI思考时间，防止能力退化</span></li>
+          <li class="sage"><span class="hl-num">5</span><span>记录认知进化轨迹，持续迭代</span></li>
+        </ul>
+      </div>
+      <div>
+        <div class="callout callout-insight">
+          <div class="callout-label">绝不外包的认知领域</div>
+          <ul class="hl-list">
+            <li class="gold"><span class="hl-num">⚖</span><span><strong>最终决策权：</strong>所有重大决策由我做出，AI只提供参考</span></li>
+            <li class="gold"><span class="hl-num">💡</span><span><strong>价值判断：</strong>涉及伦理、价值观的判断由我做出</span></li>
+            <li class="gold"><span class="hl-num">✨</span><span><strong>创意生成：</strong>从0到1的原创想法由我产生</span></li>
+            <li class="gold"><span class="hl-num">❤</span><span><strong>人际关系：</strong>涉及情感、信任的互动由我主导</span></li>
+          </ul>
+        </div>
+        <div class="callout callout-sage" style="margin-top:12px">
+          <div class="callout-label">AI协作边界</div>
+          <div class="tbl-wrap">
+            <table>
+              <thead><tr><th>任务类型</th><th>AI角色</th><th>人类角色</th></tr></thead>
+              <tbody>
+                <tr><td>信息检索</td><td>主导执行</td><td>验证、整合</td></tr>
+                <tr><td>方案生成</td><td>生成选项</td><td>评估、选择</td></tr>
+                <tr><td>决策判断</td><td>提供参考</td><td><strong>最终决策</strong></td></tr>
+                <tr><td>创意生成</td><td>辅助启发</td><td><strong>原创、迭代</strong></td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="footnote">【阅读指引】主手册P 1−65提供行动指南 | 补充手册P 66−120提供理论溯源</div>
+  </div>
+</div>
+
+<!-- P39 每日认知训练清单 -->
+<div class="page" id="p39">
+  <div class="page-header">
+    <div class="page-header-left">
+      <span class="badge-chapter">第五章</span>
+      <span class="badge-type">实操工具</span>
+      <span class="page-title-text">📝 每日认知训练清单</span>
+    </div>
+    <span class="page-num">P 39 / 65</span>
+  </div>
+  <div class="page-body">
+    <div class="grid-2">
+      <div>
+        <div class="tbl-wrap">
+          <table>
+            <thead>
+              <tr><th>训练项目</th><th>具体行动</th><th>时间</th></tr>
+            </thead>
+            <tbody>
+              <tr><td>晨间问题重构</td><td>选一个模糊问题，用三个视角重新表述</td><td>3分钟</td></tr>
+              <tr><td>AI输出验证</td><td>对AI输出提出一个反例假设并验证</td><td>5分钟</td></tr>
+              <tr><td>思维回放</td><td>记录一个决策的思维路径</td><td>3分钟</td></tr>
+              <tr><td>体感觉察</td><td>决策前记录身体信号</td><td>1分钟</td></tr>
+              <tr><td>晚间复盘</td><td>回顾当日认知训练效果</td><td>3分钟</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="callout callout-insight" style="margin-top:14px">
+          <div class="callout-label">训练原则</div>
+          <ul style="font-size:13px">
+            <li>持续性比强度更重要</li>
+            <li>嵌入现有工作流，不额外增加负担</li>
+            <li>记录训练效果，定期调整</li>
+            <li>与30天计划配合使用</li>
+          </ul>
+        </div>
+      </div>
+      <div>
+        <div class="callout callout-sage">
+          <div class="callout-label">建议时间安排</div>
+          <ul style="font-size:13.5px;line-height:2">
+            <li><strong>晨间：</strong>问题重构（3分钟）</li>
+            <li><strong>工作中：</strong>AI验证（5分钟）、体感觉察（1分钟）</li>
+            <li><strong>傍晚：</strong>思维回放（3分钟）</li>
+            <li><strong>晚间：</strong>复盘（3分钟）</li>
+          </ul>
+          <p style="font-size:13px;margin-top:10px">相关工具：30天提升计划（P51）、九种元能力微练习（P35）</p>
+        </div>
+        <div class="tool-box" style="margin-top:12px">
+          <div class="tool-box-title">无AI深度思考实践</div>
+          <p>每周至少2小时（建议固定时段，如周六上午）。关闭电子设备，准备纸笔，选择安静环境，按六步迭代法深度思考。记录思考过程，事后与AI辅助结果对比。</p>
+        </div>
+      </div>
+    </div>
+    <div class="footnote">【工具说明】本文设计；参考Ericsson, 2006《刻意练习》</div>
+  </div>
+</div>
+
+<!-- P55 核心概念速记卡 + P60 核心金句 -->
+<div class="page" id="p55">
+  <div class="page-header">
+    <div class="page-header-left">
+      <span class="badge-chapter">第五章附录</span>
+      <span class="page-title-text">📌 核心概念速记 · AI使用边界 · 核心金句</span>
+    </div>
+    <span class="page-num">P 44 – 60 / 65</span>
+  </div>
+  <div class="page-body">
+    <div class="grid-3" style="margin-bottom:16px">
+      <div class="callout callout-core"><div class="callout-label">认知地震</div><p>AI引发的知识价值体系剧变</p></div>
+      <div class="callout callout-warning"><div class="callout-label">认知空心化</div><p>外部信息涌入，内部思考能力退化</p></div>
+      <div class="callout callout-sage"><div class="callout-label">元能力</div><p>生成能力的能力（跨领域可迁移）</p></div>
+      <div class="callout callout-core"><div class="callout-label">高阶能力</div><p>元能力的有机组合</p></div>
+      <div class="callout callout-sage"><div class="callout-label">认知增强人</div><p>与AI协同进化的人类</p></div>
+      <div class="callout callout-warning"><div class="callout-label">认知外包</div><p>将思考任务交给AI</p></div>
+    </div>
+    <div class="grid-2">
+      <div>
+        <h3>AI使用边界指南</h3>
+        <div class="grid-2" style="gap:10px">
+          <div class="callout callout-warning" style="padding:12px">
+            <div class="callout-label">必须亲自做的事</div>
+            <ul style="font-size:13px">
+              <li>定义问题的核心</li>
+              <li>做价值判断和决策</li>
+              <li>验证AI输出的准确性</li>
+              <li>承担决策的责任</li>
+            </ul>
+          </div>
+          <div class="callout callout-sage" style="padding:12px">
+            <div class="callout-label">可以交给AI做的事</div>
+            <ul style="font-size:13px">
+              <li>信息检索和整理</li>
+              <li>生成多种方案选项</li>
+              <li>常规性写作初稿</li>
+              <li>数据分析和可视化</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <div>
+        <h3>核心金句集锦</h3>
+        <blockquote style="margin-bottom:10px">知识存量的价值趋近于零，认知质量成为新的稀缺资源。</blockquote>
+        <blockquote style="margin-bottom:10px">元能力是笔画，高阶能力是汉字——掌握笔画，便能书写任何汉字。</blockquote>
+        <blockquote>AI不会取代人类，但会使用AI的人类将取代不会使用的人类。</blockquote>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════
+     SUPPLEMENT COVER
+══════════════════════════════ -->
+<div class="page-cover" id="supplement" style="background:linear-gradient(155deg,#0a2030 0%,#1a3a5c 100%)">
+  <span class="cover-icon">📚</span>
+  <div class="cover-title" style="font-size:32px">认知地震·学术深度补充手册</div>
+  <div class="cover-subtitle">Cognitive Earthquake: Academic Companion</div>
+  <div class="cover-callout">
+    <div class="cover-callout-label">本手册定位</div>
+    <p>补充手册是主手册的配套学术拓展材料，提供理论溯源、实证证据、深度案例与学术资源库，适合深度研究者使用。</p>
+  </div>
+  <div class="cover-cards">
+    <div class="cover-card"><div class="cover-card-label">主手册</div><div class="cover-card-range">P1 – P65</div><div class="cover-card-desc">行动指南</div></div>
+    <div class="cover-card"><div class="cover-card-label">补充手册</div><div class="cover-card-range">P66 – P120</div><div class="cover-card-desc">理论溯源</div></div>
+  </div>
+  <div class="cover-meta">V12 | 2026年3月 · 补充手册封面 · P 66 / 120</div>
+</div>
+
+<!-- ══════════════════════════════
+     MODULE 1
+══════════════════════════════ -->
+<div class="chapter-intro" id="mod1" style="background:linear-gradient(135deg,#1a3a5c,#2e5070)">
+  <div class="ci-num">模块一</div>
+  <div class="ci-title">知识贬值的深层机制</div>
+  <div class="ci-desc">布鲁姆认知金字塔的数字沉降、效能比倒挂、科斯定理、技能极化、生存不等式——理解知识贬值的学术底层逻辑。</div>
+  <div class="ci-page">补充手册 P67 – P73</div>
+</div>
+
+<div class="page" id="s-mod1">
+  <div class="page-header">
+    <div class="page-header-left">
+      <span class="badge-chapter">模块一</span>
+      <span class="badge-type">进阶思考</span>
+      <span class="page-title-text">📊 知识贬值机制：布鲁姆金字塔 · 效能比 · 技能极化</span>
+    </div>
+    <span class="page-num">P 67 – 73 / 120</span>
+  </div>
+  <div class="page-body">
+    <div class="grid-2">
+      <div>
+        <h3>布鲁姆认知金字塔的数字沉降</h3>
+        <p>AI正将人类认知的底部三层（记忆、理解、应用）转化为低成本公共资源，导致"认知沉降"——曾经的高阶技能下沉为基础劳动。</p>
+        <div class="callout callout-blue">
+          <div class="callout-label">【图S-1】布鲁姆认知金字塔</div>
+          <div style="display:flex;flex-direction:column;gap:6px;padding:8px 0">
+            <div style="background:#2e7d5e;padding:8px 14px;border-radius:6px;text-align:center;color:white;font-size:13px;font-weight:700">创造（保留人类核心）</div>
+            <div style="background:#1e7a5e;padding:8px 14px;border-radius:6px;text-align:center;color:white;font-size:13px;margin:0 8px">评价（人类主导）</div>
+            <div style="background:#1e6a7a;padding:8px 14px;border-radius:6px;text-align:center;color:white;font-size:13px;margin:0 16px">分析（人机协作）</div>
+            <div style="background:#c0392b;padding:8px 14px;border-radius:6px;text-align:center;color:white;font-size:12px;margin:0 24px;opacity:0.85">应用 ← AI开始替代</div>
+            <div style="background:#c0392b;padding:8px 14px;border-radius:6px;text-align:center;color:white;font-size:12px;margin:0 32px;opacity:0.7">理解 ← AI大量替代</div>
+            <div style="background:#c0392b;padding:8px 14px;border-radius:6px;text-align:center;color:white;font-size:12px;margin:0 40px;opacity:0.55">记忆 ← AI完全替代</div>
+          </div>
+          <p style="font-size:11.5px;color:var(--text-muted);margin-top:6px">来源：Bloom 1956；Anderson & Krathwohl 2001；Brynjolfsson & McAfee 2014</p>
+        </div>
+      </div>
+      <div>
+        <h3>效能比与科斯定理</h3>
+        <div class="callout callout-core">
+          <div class="callout-label">科斯定理（Coase, 1937）应用</div>
+          <p>企业的边界由交易成本决定。AI大幅降低了知识获取的交易成本，推动了认知活动的外包。</p>
+          <p style="margin-top:8px"><strong>效能比</strong> = 外部获取成本 / 内部培养成本<br>· 效能比 &gt; 1：应自建能力<br>· 效能比 &lt; 1：应外部获取<br>· AI时代：大多数显性知识效能比趋近于0</p>
+          <p style="margin-top:8px;color:var(--rose)"><strong>关键洞察：</strong>但"判断力"的效能比仍然很高——外部获取判断的成本极高。</p>
+        </div>
+        <h3>技能极化与生存不等式</h3>
+        <div class="callout callout-warning">
+          <div class="callout-label">技能极化（Autor, Levy & Murnane, 2003）</div>
+          <p>自动化首先替代"常规性、可编码"的任务，导致中等技能岗位萎缩。AI时代极化趋势加剧。</p>
+        </div>
+        <div class="callout callout-insight">
+          <div class="callout-label">生存不等式</div>
+          <p style="font-family:monospace;font-size:14px;text-align:center;padding:8px">Δ能力/Δt &gt; 1/半衰期</p>
+          <p>若半衰期为2.5年，则每年至少需更新40%的知识存量才能维持价值。认知元能力是提高学习速度、对抗知识贬值的唯一可持续路径。</p>
+        </div>
+      </div>
+    </div>
+    <div class="footnote">【学术旁注】Coase 1937；Autor et al. 2003；Bloom 1956；WEF《未来就业报告》2025</div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════
+     MODULE 2
+══════════════════════════════ -->
+<div class="chapter-intro" id="mod2" style="background:linear-gradient(135deg,#3a1a2a,#5a2a40)">
+  <div class="ci-num">模块二</div>
+  <div class="ci-title">认知空心化证据</div>
+  <div class="ci-desc">神经科学研究、元认知失调与虚假原创感、AI幻觉分类学、算法回音室——认知空心化的实证基础。</div>
+  <div class="ci-page">补充手册 P74 – P84</div>
+</div>
+
+<div class="page" id="s-mod2">
+  <div class="page-header">
+    <div class="page-header-left">
+      <span class="badge-chapter">模块二</span>
+      <span class="badge-type">进阶思考</span>
+      <span class="page-title-text">🧠 认知空心化证据：神经科学 · AI幻觉 · 算法回音室</span>
+    </div>
+    <span class="page-num">P 74 – 84 / 120</span>
+  </div>
+  <div class="page-body">
+    <div class="grid-2">
+      <div>
+        <h3>元认知失调与"虚假原创感"（P76）</h3>
+        <div class="callout callout-warning">
+          <div class="callout-label">Stanford University 2023 实验数据</div>
+          <ul style="font-size:14px">
+            <li><strong>63%</strong> 使用AI辅助完成作业的学生将AI生成内容误认为自己的原创思考</li>
+            <li><strong>+40%</strong> 对自己理解程度的自信度比实际水平高出40%</li>
+          </ul>
+          <p style="margin-top:8px">"虚假原创感"：源于元认知失调——对自身认知能力的评估与实际能力之间的巨大偏差。</p>
+        </div>
+        <div class="tool-box">
+          <div class="tool-box-title">防幻觉审计表（工具T-6）</div>
+          <p>每次使用AI后，请回答：<br>① 我能否在没有AI辅助下复述核心逻辑链？<br>② 我是否识别出了AI输出中的事实瑕疵？<br>③ 该结论是否符合我的直觉体感？<br><strong>三项全"是"方可采信。</strong></p>
+        </div>
+      </div>
+      <div>
+        <h3>AI幻觉分类学（P77）</h3>
+        <div class="tbl-wrap">
+          <table>
+            <thead><tr><th>类型</th><th>特征</th><th>识别方法</th></tr></thead>
+            <tbody>
+              <tr><td><strong>事实性幻觉</strong></td><td>编造不存在的数据、事件</td><td>检索验证来源</td></tr>
+              <tr><td><strong>因果性幻觉</strong></td><td>推理前提错误或因果链断裂</td><td>追溯推理链条</td></tr>
+              <tr><td><strong>互文性幻觉</strong></td><td>捏造文献、法规、判例</td><td>交叉验证事实</td></tr>
+              <tr><td><strong>过度自信</strong></td><td>对错误信息高度自信</td><td>保持批判态度</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="callout callout-warning" style="margin-top:12px">
+          <div class="callout-label">认知污染循环</div>
+          <p>AI生成幻觉 → 人类未验证即采信 → 存入知识库 → 被引用传播 → 幻觉被强化 → 污染更多决策</p>
+          <p style="margin-top:8px;font-size:13px">经典案例：纽约律师案（NYT, 2023）——ChatGPT生成6个不存在的判例，律师未加验证即提交法庭。</p>
+        </div>
+        <h3>AI幻觉识别三步法（工具T-6）</h3>
+        <ul class="hl-list">
+          <li class="sage"><span class="hl-num">1</span><span><strong>验来源：</strong>追溯数据、引用的原始出处</span></li>
+          <li class="sage"><span class="hl-num">2</span><span><strong>验逻辑：</strong>检查推理链条是否完整、前提是否成立</span></li>
+          <li class="sage"><span class="hl-num">3</span><span><strong>验反例：</strong>主动寻找可能推翻结论的证据</span></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footnote">【学术旁注】Flavell 1979；Kruger & Dunning 1999；Xia et al. 2025；Maguire et al. 2000</div>
+  </div>
+</div>
+
+<!-- MODULE 3 -->
+<div class="chapter-intro" id="mod3" style="background:linear-gradient(135deg,#1a3a1a,#2e5a2e)">
+  <div class="ci-num">模块三</div>
+  <div class="ci-title">跨领域创新案例</div>
+  <div class="ci-desc">Airbnb、iPhone、蚁群算法、观察者模式迁移、MVP——关系构建与模式操作在真实创新中的体现。</div>
+  <div class="ci-page">补充手册 P85 – P91</div>
+</div>
+
+<div class="page" id="s-mod3">
+  <div class="page-header">
+    <div class="page-header-left">
+      <span class="badge-chapter">模块三</span>
+      <span class="badge-type">案例研究</span>
+      <span class="page-title-text">🔗 跨领域创新案例：关系构建与模式操作的应用</span>
+    </div>
+    <span class="page-num">P 85 – 91 / 120</span>
+  </div>
+  <div class="page-body">
+    <div class="grid-2">
+      <div>
+        <h3>案例一：Airbnb（关系构建）</h3>
+        <div class="callout callout-sage">
+          <div class="callout-label">元能力应用</div>
+          <p><strong>关系构建：</strong>将"闲置空间"与"旅行需求"连接 → 共享住宿平台<br>房地产 + 旅游 = 全新商业模式</p>
+          <p style="margin-top:8px"><strong>模式操作 + 模式速配：</strong>从既有模式中抽象"资源共享"结构，迁移到新场景。</p>
+        </div>
+        <h3>案例二：iPhone（关系构建 + 问题表征）</h3>
+        <div class="callout callout-sage">
+          <div class="callout-label">创新分解</div>
+          <p><strong>关系构建：</strong>将科研领域"多点触控技术"与消费电子"手机交互"连接<br><strong>模式操作：</strong>将"鼠标+键盘"模式重组成"手指直接操作"<br><strong>问题表征：</strong>重新定义"人机交互"本质——从"输入"到"直接操纵"</p>
+          <p style="margin-top:8px;font-size:13px;color:var(--text-muted)">乔布斯："创造力就是把事物连接起来。"</p>
+        </div>
+      </div>
+      <div>
+        <h3>案例三：观察者模式跨领域迁移（模式操作）</h3>
+        <div class="callout callout-core">
+          <div class="callout-label">迁移过程</div>
+          <p><strong>原领域（软件工程）：</strong>一个对象状态变化时，所有依赖对象自动收到通知<br><strong>抽象结构：</strong>状态变化 → 通知依赖方 → 自动响应<br><strong>迁移到（组织管理）：</strong>任务状态看板——任务变化自动通知相关人员、更新报表、触发后续流程</p>
+        </div>
+        <h3>案例四：MVP理念（模式操作跨越200年）</h3>
+        <div class="callout callout-core">
+          <div class="callout-label">跨学科同构</div>
+          <p><strong>最小作用量原理（Lagrange, 1788）：</strong>物体选择作用量最小的路径。<br><strong>抽象后：</strong>在不确定性中，选择最小代价验证假设<br><strong>精益创业MVP（Ries, 2011）：</strong>用最少功能、最短时间验证核心假设，获取用户反馈后迭代。</p>
+        </div>
+        <div class="callout callout-insight" style="margin-top:12px">
+          <div class="callout-label">核心洞察</div>
+          <p>关系构建能力使个体能够将看似无关的领域整合为全新范式，从而创造颠覆性创新。达尔文将马尔萨斯《人口论》中"生存竞争"的思想迁移到生物学，提出"自然选择"——跨越学科的关系构建经典范例。</p>
+        </div>
+      </div>
+    </div>
+    <div class="footnote">【学术旁注】Fauconnier & Turner 2002；Gamma et al. 1994；Ries 2011；Klein 1998</div>
+  </div>
+</div>
+
+<!-- MODULE 4 -->
+<div class="chapter-intro" id="mod4" style="background:linear-gradient(135deg,#1a2a4a,#2a3a6a)">
+  <div class="ci-num">模块四</div>
+  <div class="ci-title">深度思考方法论</div>
+  <div class="ci-desc">六步迭代法的完整应用、回退逻辑与纠错红利、元认知作为操作系统、认知免疫系统三层防御。</div>
+  <div class="ci-page">补充手册 P92 – P98</div>
+</div>
+
+<div class="page" id="s-mod4">
+  <div class="page-header">
+    <div class="page-header-left">
+      <span class="badge-chapter">模块四</span>
+      <span class="badge-type">方法论</span>
+      <span class="page-title-text">🧠 深度思考方法论：六步法 · 回退机制 · 认知免疫系统</span>
+    </div>
+    <span class="page-num">P 92 – 98 / 120</span>
+  </div>
+  <div class="page-body">
+    <div class="grid-2">
+      <div>
+        <h3>六步迭代法完整应用（城市交通案例）</h3>
+        <div class="step-flow">
+          <div class="step"><div class="step-num">1</div><div class="step-title">问题表征</div><div class="step-desc">从"控制拥堵"→"控堵同时保障社会运转"</div></div>
+          <div class="step"><div class="step-num">2</div><div class="step-title">建模</div><div class="step-desc">变量：传播/资源/冲击；约束：法律/物资</div></div>
+          <div class="step"><div class="step-num">3</div><div class="step-title">迭代</div><div class="step-desc">批判：限行长期引发不满；创造：动态收费+分区管理</div></div>
+          <div class="step"><div class="step-num">4</div><div class="step-title">评价</div><div class="step-desc">效率×公平×成本×可行性多维评估</div></div>
+          <div class="step"><div class="step-num">5</div><div class="step-title">策略</div><div class="step-desc">主方案+备选方案+切换条件</div></div>
+          <div class="step"><div class="step-num">6</div><div class="step-title">成果</div><div class="step-desc">白皮书+试点立项+三年评估周期</div></div>
+        </div>
+        <h3>回退逻辑与纠错红利（P96）</h3>
+        <div class="callout callout-insight">
+          <div class="callout-label">元监控触发点（必须回退的情形）</div>
+          <ul style="font-size:13px">
+            <li>推理前提中包含AI未验证的假设 → 回到步骤3</li>
+            <li>关键变量被遗漏 → 回到步骤2</li>
+            <li>解决方案与初始目标偏离 → 回到步骤1</li>
+            <li>证据链中出现无法验证的环节 → 回到步骤3</li>
+          </ul>
+          <p style="margin-top:8px;font-size:13px">回退不是失败，而是深度思考者的必修课。（Schön, 1983）</p>
+        </div>
+      </div>
+      <div>
+        <h3>元认知作为操作系统（P97）</h3>
+        <div class="callout callout-blue">
+          <div class="callout-label">计算机类比</div>
+          <ul style="font-size:13.5px;line-height:2">
+            <li><strong>注意力 = CPU：</strong>决定当前思考焦点</li>
+            <li><strong>工作记忆 = 内存：</strong>容量有限（7±2个信息块）</li>
+            <li><strong>长期记忆 = 硬盘：</strong>存储经验与模式</li>
+            <li><strong>元认知 = 操作系统：</strong>调度CPU与内存，防止认知过载</li>
+          </ul>
+        </div>
+        <h3>认知免疫系统三层防御（P98）</h3>
+        <div class="callout callout-sage">
+          <div class="callout-label">三层防御</div>
+          <ul class="hl-list">
+            <li class="sage"><span class="hl-num">1</span><span><strong>价值判断层（伦理防火墙）：</strong>在AI输出触及伦理边界时，主动拦截</span></li>
+            <li class="sage"><span class="hl-num">2</span><span><strong>批判性审计层（逻辑哨兵）：</strong>对AI生成的推理链条进行交叉验证</span></li>
+            <li class="sage"><span class="hl-num">3</span><span><strong>认知韧性层（思维主权）：</strong>无AI环境中仍能高质量思考</span></li>
+          </ul>
+          <p style="margin-top:10px;font-size:13px">三层防御共同构成抵御认知空心化的免疫系统。定期训练可强化这一系统。</p>
+        </div>
+      </div>
+    </div>
+    <div class="footnote">【学术旁注】Schön 1983；Sweller 1988；Baddeley 2003；本文整合</div>
+  </div>
+</div>
+
+<!-- MODULE 5 -->
+<div class="chapter-intro" id="mod5" style="background:linear-gradient(135deg,#2a1a3a,#4a2a5a)">
+  <div class="ci-num">模块五</div>
+  <div class="ci-title">组织与未来展望</div>
+  <div class="ci-desc">组织认知健康评估、人机协作边界、教育范式转移、认知教练、无AI深度工作区、2030年阶层分化预测。</div>
+  <div class="ci-page">补充手册 P99 – P105</div>
+</div>
+
+<div class="page" id="s-mod5">
+  <div class="page-header">
+    <div class="page-header-left">
+      <span class="badge-chapter">模块五</span>
+      <span class="badge-type">组织与未来</span>
+      <span class="page-title-text">🏢 组织与未来展望：认知健康 · 教育转型 · 2030展望</span>
+    </div>
+    <span class="page-num">P 99 – 105 / 120</span>
+  </div>
+  <div class="page-body">
+    <div class="grid-2">
+      <div>
+        <h3>组织认知健康评估框架（工具T-2）P99</h3>
+        <div class="tbl-wrap">
+          <table>
+            <thead><tr><th>维度</th><th>指标</th><th>健康阈值</th></tr></thead>
+            <tbody>
+              <tr><td>决策质量</td><td>独立决策比例</td><td>≥60%</td></tr>
+              <tr><td>创新能力</td><td>原创想法占比</td><td>≥40%</td></tr>
+              <tr><td>风险识别</td><td>幻觉识别率</td><td>≥80%</td></tr>
+              <tr><td>学习能力</td><td>培训覆盖率</td><td>≥70%</td></tr>
+              <tr><td>认知主权</td><td>人机边界清晰度</td><td>明确</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <h3>教育范式转移（P101）</h3>
+        <div class="callout callout-blue">
+          <div class="callout-label">传统教育 vs AI时代教育</div>
+          <p><strong>传统：</strong>记忆→理解→应用（知识传授为主）<br><strong>AI时代：</strong>问题表征→关系构建→策略选择→价值判断（能力培养为主）</p>
+        </div>
+      </div>
+      <div>
+        <h3>无AI深度工作区（P103）</h3>
+        <div class="callout callout-sage">
+          <div class="callout-label">实施要点</div>
+          <p><strong>定义：</strong>在组织内部划定特定时间段，禁止使用AI工具，强制员工进行独立深度思考。</p>
+          <ul style="font-size:13px;margin-top:8px">
+            <li>时间：每周固定半天（如周五下午）</li>
+            <li>范围：核心决策团队、产品设计部门</li>
+            <li>规则：不联网、不使用AI，仅用纸笔、白板</li>
+          </ul>
+          <p style="margin-top:8px;font-size:13px;color:var(--text-muted)">案例：某科技公司实施"无AI周三"后，创新提案增加30%，决策质量显著提升。</p>
+        </div>
+        <h3>2030展望：阶层分化预测（P104）</h3>
+        <div class="grid-2" style="gap:8px;margin-top:10px">
+          <div class="callout callout-sage" style="padding:12px">
+            <div class="callout-label">认知增强人</div>
+            <p style="font-size:13px">掌握元能力，能驾驭AI、保持独立思维，占据决策层</p>
+          </div>
+          <div class="callout callout-warning" style="padding:12px">
+            <div class="callout-label">AI依赖者</div>
+            <p style="font-size:13px">过度依赖算法，丧失逻辑导航能力，沦为工具执行层</p>
+          </div>
+        </div>
+        <div class="callout callout-insight" style="margin-top:10px">
+          <div class="callout-label">人类主权</div>
+          <p>当AI可替代大部分认知劳动，人类的独特价值在于：赋予意义、承担伦理责任、进行审美与情感连接。保持对自身思维过程的终极控制权，不被算法驯化。</p>
+        </div>
+      </div>
+    </div>
+    <div class="footnote">【学术旁注】UNESCO 2021；OECD 2019；本文设计</div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════
+     MODULE 6 RESOURCES
+══════════════════════════════ -->
+<div class="chapter-intro" id="mod6" style="background:linear-gradient(135deg,#1a1a2a,#2a2a4a)">
+  <div class="ci-num">模块六</div>
+  <div class="ci-title">学术资源库</div>
+  <div class="ci-desc">跨学科精要字典、参考文献、延伸学习图谱、概念术语表、工具索引，以及全文索引与版本说明。</div>
+  <div class="ci-page">补充手册 P106 – P120</div>
+</div>
+
+<!-- Tools Index P113 -->
+<div class="page" id="tools">
+  <div class="page-header">
+    <div class="page-header-left">
+      <span class="badge-chapter">模块六</span>
+      <span class="badge-type">工具索引</span>
+      <span class="page-title-text">🛠 工具索引：认知增强工具箱（共14个工具）</span>
+    </div>
+    <span class="page-num">P 113 / 120</span>
+  </div>
+  <div class="page-body">
+    <div class="grid-3">
+      <div>
+        <h3 style="color:var(--rose)">评估工具</h3>
+        <div class="tool-box" style="margin-bottom:10px">
+          <div class="tool-box-title">T-1 认知健康快速自测表</div>
+          <p>快速评估个人认知健康状态，识别空心化风险信号<br><span class="tag tag-navy">主手册 P15</span></p>
+        </div>
+        <div class="tool-box" style="margin-bottom:10px">
+          <div class="tool-box-title">T-2 组织认知健康评估框架</div>
+          <p>组织级认知健康指标体系，用于组织诊断<br><span class="tag tag-navy">补充手册 P99</span></p>
+        </div>
+        <div class="tool-box" style="margin-bottom:10px">
+          <div class="tool-box-title">T-3 组织AI依赖指数自查</div>
+          <p>评估组织AI依赖程度，识别系统性风险<br><span class="tag tag-navy">补充手册 P84</span></p>
+        </div>
+        <div class="tool-box">
+          <div class="tool-box-title">T-4 认知空心化诊断量表</div>
+          <p>15项深度诊断，识别认知空心化程度<br><span class="tag tag-navy">补充手册 P80</span></p>
+        </div>
+      </div>
+      <div>
+        <h3 style="color:var(--teal)">练习工具</h3>
+        <div class="tool-box" style="margin-bottom:10px">
+          <div class="tool-box-title">T-5 九种元能力5分钟微练习</div>
+          <p>可嵌入日常工作流的微型练习<br><span class="tag tag-navy">主手册 P35</span></p>
+        </div>
+        <div class="tool-box" style="margin-bottom:10px">
+          <div class="tool-box-title">T-6 防幻觉审计表</div>
+          <p>验证AI输出的三步检查清单<br><span class="tag tag-navy">补充手册 P76</span></p>
+        </div>
+        <div class="tool-box" style="margin-bottom:10px">
+          <div class="tool-box-title">T-7 思维回放仪</div>
+          <p>深度思考后的复盘工具，提升元监控敏锐度<br><span class="tag tag-navy">主手册 P21</span></p>
+        </div>
+        <div class="tool-box" style="margin-bottom:10px">
+          <div class="tool-box-title">T-8 身体雷达练习</div>
+          <p>决策前体感信号记录，培养直觉判断力<br><span class="tag tag-navy">主手册 P28</span></p>
+        </div>
+        <div class="tool-box">
+          <div class="tool-box-title">T-9 反向证伪练习</div>
+          <p>对AI输出进行批判性验证的思维训练<br><span class="tag tag-navy">主手册 P25</span></p>
+        </div>
+      </div>
+      <div>
+        <h3 style="color:var(--sage)">计划与记录工具</h3>
+        <div class="tool-box" style="margin-bottom:10px">
+          <div class="tool-box-title">T-10 30天元能力提升计划</div>
+          <p>情境驱动的月度能力提升路线图<br><span class="tag tag-navy">主手册 P51-52</span></p>
+        </div>
+        <div class="tool-box" style="margin-bottom:10px">
+          <div class="tool-box-title">T-11 问题重构工作纸</div>
+          <p>将模糊问题转化为清晰模型的填写模板<br><span class="tag tag-navy">补充手册 P92</span></p>
+        </div>
+        <div class="tool-box" style="margin-bottom:10px">
+          <div class="tool-box-title">T-12 认知增强人里程碑卡</div>
+          <p>记录元能力应用的真实瞬间，追踪进化轨迹<br><span class="tag tag-navy">补充手册 P120</span></p>
+        </div>
+        <div class="tool-box" style="margin-bottom:10px">
+          <div class="tool-box-title">T-13 行动契约模板</div>
+          <p>明确个人不外包的认知领域，签署承诺<br><span class="tag tag-navy">补充手册 P105</span></p>
+        </div>
+        <div class="tool-box">
+          <div class="tool-box-title">T-14 模式提取练习卡</div>
+          <p>从成功案例抽象通用模式的训练工具<br><span class="tag tag-navy">补充手册 P88</span></p>
+        </div>
+      </div>
+    </div>
+    <div class="footnote">共14个工具，覆盖评估、练习、计划三大类别 | 所有工具均可单独使用或组合应用</div>
+  </div>
+</div>
+
+<!-- Glossary P112 -->
+<div class="page" id="glossary">
+  <div class="page-header">
+    <div class="page-header-left">
+      <span class="badge-chapter">模块六</span>
+      <span class="badge-type">术语表</span>
+      <span class="page-title-text">📖 概念术语表：核心概念索引</span>
+    </div>
+    <span class="page-num">P 112 / 120</span>
+  </div>
+  <div class="page-body">
+    <div class="tbl-wrap">
+      <table>
+        <thead>
+          <tr><th>术语</th><th>英文</th><th>定义</th><th>来源</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><strong>认知地震</strong></td><td>Cognitive Earthquake</td><td>AI引发的知识价值重构与认知能力分化现象</td><td>本文定义</td></tr>
+          <tr><td><strong>认知空心化</strong></td><td>Cognitive Hollowing</td><td>过度依赖AI导致的独立思考能力退化</td><td>本文定义</td></tr>
+          <tr><td><strong>认知沉降</strong></td><td>Cognitive Sinking</td><td>低阶认知能力被AI替代，下沉为公共资源</td><td>本文定义</td></tr>
+          <tr><td><strong>技能陷阱</strong></td><td>Skill Trap</td><td>个体认知结构被锁定在可算法化领域</td><td>本文定义</td></tr>
+          <tr><td><strong>元能力</strong></td><td>Meta-competency</td><td>跨领域、可迁移的认知操作能力</td><td>本文定义</td></tr>
+          <tr><td><strong>元认知</strong></td><td>Metacognition</td><td>对认知的认知，包含元认知知识、元监控、元调节</td><td>Flavell, 1979</td></tr>
+          <tr><td><strong>认知负荷</strong></td><td>Cognitive Load</td><td>工作记忆处理信息时承受的心理负担</td><td>Sweller, 1988</td></tr>
+          <tr><td><strong>具身认知</strong></td><td>Embodied Cognition</td><td>认知根植于身体体验，抽象概念由身体隐喻构成</td><td>Lakoff & Johnson, 1999</td></tr>
+          <tr><td><strong>可证伪性</strong></td><td>Falsifiability</td><td>科学理论的可检验标准</td><td>Popper, 1934</td></tr>
+          <tr><td><strong>认知增强人</strong></td><td>Cognitive Augmented Human</td><td>主动培养元能力，将AI作为认知放大器的人</td><td>本文定义</td></tr>
+          <tr><td><strong>虚假原创感</strong></td><td>Illusory Originality</td><td>将AI生成内容误认为自己原创思考的现象</td><td>Stanford, 2023</td></tr>
+          <tr><td><strong>元认知失调</strong></td><td>Metacognitive Dysregulation</td><td>对自身认知能力评估与实际能力的偏差</td><td>Kruger & Dunning, 1999</td></tr>
+          <tr><td><strong>体感映射</strong></td><td>Somatic Mapping</td><td>将抽象概念转化为身体感知的能力</td><td>本文定义</td></tr>
+          <tr><td><strong>模式速配</strong></td><td>Pattern Matching</td><td>快速识别相似情境的能力</td><td>Klein, 1998</td></tr>
+          <tr><td><strong>认知主权</strong></td><td>Cognitive Sovereignty</td><td>个体对自身思维过程的主权</td><td>本文定义</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="footnote">【说明】本术语表涵盖手册所有核心概念 | 来源标注"本文定义"者为作者原创概念</div>
+  </div>
+</div>
+
+<!-- References P109-110 -->
+<div class="page" id="references">
+  <div class="page-header">
+    <div class="page-header-left">
+      <span class="badge-chapter">模块六</span>
+      <span class="badge-type">参考文献</span>
+      <span class="page-title-text">📚 参考文献（APA第7版格式）</span>
+    </div>
+    <span class="page-num">P 109 – 111 / 120</span>
+  </div>
+  <div class="page-body">
+    <h3>经典学术文献</h3>
+    <div class="grid-2" style="gap:16px">
+      <ul style="font-size:12.5px;line-height:2;list-style:disc;padding-left:18px;color:var(--text-light)">
+        <li>Anderson, L. W., & Krathwohl, D. R. (Eds.). (2001). <em>A taxonomy for learning, teaching, and assessing.</em> New York: Longman.</li>
+        <li>Autor, D. H., Levy, F., & Murnane, R. J. (2003). The skill content of recent technological change. <em>Quarterly Journal of Economics, 118</em>(4), 1279–1333.</li>
+        <li>Bloom, B. S. (Ed.). (1956). <em>Taxonomy of educational objectives.</em> New York: David McKay.</li>
+        <li>Chase, W. G., & Simon, H. A. (1973). Perception in chess. <em>Cognitive Psychology, 4</em>(1), 55–81.</li>
+        <li>Chi, M. T. H., Feltovich, P. J., & Glaser, R. (1981). Categorization and representation of physics problems. <em>Cognitive Science, 5</em>(2), 121–152.</li>
+        <li>Coase, R. H. (1937). The nature of the firm. <em>Economica, 4</em>(16), 386–405.</li>
+        <li>Fauconnier, G., & Turner, M. (2002). <em>The way we think.</em> New York: Basic Books.</li>
+        <li>Flavell, J. H. (1979). Metacognition and cognitive monitoring. <em>American Psychologist, 34</em>(10), 906–911.</li>
+      </ul>
+      <ul style="font-size:12.5px;line-height:2;list-style:disc;padding-left:18px;color:var(--text-light)">
+        <li>Gentner, D. (1983). Structure-mapping: A theoretical framework for analogy. <em>Cognitive Science, 7</em>(2), 155–170.</li>
+        <li>Kahneman, D. (2011). <em>Thinking, fast and slow.</em> New York: Farrar, Straus and Giroux.</li>
+        <li>Klein, G. (1998). <em>Sources of power: How people make decisions.</em> Cambridge, MA: MIT Press.</li>
+        <li>Kruger, J., & Dunning, D. (1999). Unskilled and unaware of it. <em>Journal of Personality and Social Psychology, 77</em>(6), 1121–1134.</li>
+        <li>Lakoff, G., & Johnson, M. (1999). <em>Philosophy in the flesh.</em> New York: Basic Books.</li>
+        <li>Maguire, E. A., et al. (2000). Navigation-related structural change in the hippocampi of taxi drivers. <em>PNAS, 97</em>(8), 4398–4403.</li>
+        <li>Popper, K. R. (1959). <em>The logic of scientific discovery.</em> London: Routledge.</li>
+        <li>Schön, D. A. (1983). <em>The reflective practitioner.</em> New York: Basic Books.</li>
+        <li>Sweller, J. (1988). Cognitive load during problem solving. <em>Cognitive Science, 12</em>(2), 257–285.</li>
+      </ul>
+    </div>
+    <h3 style="margin-top:16px">报告与机构文献</h3>
+    <ul style="font-size:12.5px;line-height:2;list-style:disc;padding-left:18px;color:var(--text-light)">
+      <li>World Economic Forum. (2025). <em>The Future of Jobs Report 2025.</em> Geneva: WEF.</li>
+      <li>World Economic Forum. (2023). <em>The Future of Jobs Report 2023.</em> Geneva: WEF.</li>
+      <li>OECD. (2024). <em>Employment Outlook 2024.</em> Paris: OECD Publishing.</li>
+      <li>McKinsey Global Institute. (2023). <em>The Economic Potential of Generative AI.</em></li>
+      <li>LinkedIn. (2025). <em>Workplace Learning Report.</em></li>
+      <li>Stanford University. (2023). AI and Human Cognition Research Report.</li>
+    </ul>
+    <div class="footnote">【格式说明】本参考文献采用APA第7版格式，按第一作者姓氏字母顺序排列</div>
+  </div>
+</div>
+
+<!-- P120 Milestone Card -->
+<div class="page" id="p120">
+  <div class="page-header">
+    <div class="page-header-left">
+      <span class="badge-chapter">行动工具 · 工具T-12</span>
+      <span class="page-title-text">🏅 认知增强人里程碑卡</span>
+    </div>
+    <span class="page-num">P 120 / 120</span>
+  </div>
+  <div class="page-body">
+    <div class="grid-2">
+      <div>
+        <p>在30天内，记录你运用元能力识破AI幻觉、重构复杂命题的真实瞬间：</p>
+        <div class="tool-box">
+          <div class="tool-box-title">里程碑记录表</div>
+          <div class="tbl-wrap">
+            <table>
+              <thead><tr><th>日期</th><th>情境</th><th>运用元能力</th><th>效果</th></tr></thead>
+              <tbody>
+                <tr><td style="color:var(--text-muted)">示例：2025.03.15</td><td style="font-size:12px;color:var(--text-muted)">AI生成报告存在数据矛盾</td><td><span class="tag tag-navy">假设检验</span></td><td style="font-size:12px;color:var(--text-muted)">识破AI幻觉，避免错误决策</td></tr>
+                <tr><td>　　/　　/</td><td></td><td></td><td></td></tr>
+                <tr><td>　　/　　/</td><td></td><td></td><td></td></tr>
+                <tr><td>　　/　　/</td><td></td><td></td><td></td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+      <div>
+        <div class="callout callout-insight">
+          <div class="callout-label">九种元能力速查</div>
+          <div class="grid-2" style="gap:6px">
+            <span class="tag tag-navy">问题表征</span><span class="tag tag-navy">假设检验</span>
+            <span class="tag tag-navy">认知监控</span><span class="tag tag-navy">关系构建</span>
+            <span class="tag tag-navy">模式操作</span><span class="tag tag-navy">模式速配</span>
+            <span class="tag tag-gold">价值判断</span><span class="tag tag-gold">策略选择</span>
+            <span class="tag tag-sage">体感映射</span>
+          </div>
+        </div>
+        <div class="callout callout-sage" style="margin-top:12px">
+          <div class="callout-label">持续进化</div>
+          <p>完成记录后，你将看到自己的认知进化轨迹。建议每月复盘，持续迭代。</p>
+          <p style="margin-top:8px;color:var(--sage);font-weight:700">每一条记录都是你成为认知增强人的脚印。持续记录，见证成长。</p>
+        </div>
+      </div>
+    </div>
+    <div style="text-align:center;padding:24px 0 8px;font-size:13px;color:var(--text-muted)">
+      主手册：P1-65（行动指南） ｜ 补充手册：P66-120（理论溯源）
+    </div>
+    <div style="text-align:center;font-size:14px;font-weight:700;color:var(--navy)">—— 全文完 ——</div>
+    <div class="footnote" style="margin-top:16px;text-align:center">
+      版本号：V12 ｜ 发布日期：2026年3月 ｜ 页数：120页 ｜ 工具数量：14个<br>
+      引用说明：主手册《认知地震：AI时代人类价值的底层重构》/ 补充手册《认知地震：学术深度补充手册》/ V12 / 2026年3月<br>
+      欢迎学术引用、课堂使用、内部培训 ｜ 商业使用请联系作者获取授权
+    </div>
+  </div>
+</div>
+
+</main>
+
+<a href="#" id="scroll-top" title="返回顶部">↑</a>
+
+</body>
+</html>
